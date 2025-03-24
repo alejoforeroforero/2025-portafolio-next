@@ -14,7 +14,7 @@ export const PreviewButton = () => {
   const handleClick = () => {
     const editorState = editor.getEditorState();
     const json = editorState.toJSON();
-    const jsonText = JSON.stringify(json);  // Aseguramos que sea un string JSON válido
+    const jsonText = JSON.stringify(json);  
 
     const htmlContent = convertToHTML(jsonText);
     setPreviewContent(htmlContent);
@@ -30,7 +30,8 @@ export const PreviewButton = () => {
       const editorState = editor.getEditorState();
       const json = editorState.toJSON();
       const jsonText = JSON.stringify(json);  // Aseguramos que sea un string JSON válido
-      
+
+      console.log(jsonText)
       //await CreatePost({ text: jsonText });
       setShowPreview(false);
      

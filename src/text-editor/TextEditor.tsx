@@ -23,7 +23,7 @@ import FloatingLinkEditorPlugin from "./plugins/FloatingLinkEditorPlugin";
 
 //import TreeViewPlugin from "./plugins/TreeViewPlugin/TreeViewPlugin";
 
-import { PreviewButton } from "./ui/PreviewButton";
+// import { PreviewButton } from "./ui/PreviewButton";
 
 
 //Lexical Nodes
@@ -58,7 +58,7 @@ const editorConfig = {
   theme: TextEditorTheme,
 };
 
-export const TextEditor = ({ initialContent }: TextEditorProps) => {
+export const TextEditor = ({ initialContent, onChange }: TextEditorProps) => {
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
   const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 
@@ -66,6 +66,22 @@ export const TextEditor = ({ initialContent }: TextEditorProps) => {
     if (_floatingAnchorElem !== null) {
       setFloatingAnchorElem(_floatingAnchorElem);
     }
+  };
+
+  // Añadir un plugin para manejar los cambios
+  const OnChangePlugin = ({ onChange }: { onChange?: (content: string) => void }) => {
+    const [editor] = useLexicalComposerContext();
+    
+    useEffect(() => {
+      return editor.registerUpdateListener(({ editorState }) => {
+        if (onChange) {
+          // Convertir el estado del editor a JSON string
+          onChange(JSON.stringify(editorState.toJSON()));
+        }
+      });
+    }, [editor, onChange]);
+
+    return null;
   };
 
   return (
@@ -85,7 +101,7 @@ export const TextEditor = ({ initialContent }: TextEditorProps) => {
                         <div className="editor-placeholder">{placeholder}</div>
                       }
                     />
-                    <PreviewButton />
+                    {/* <PreviewButton /> */}
                   </div>
                 </div>
               }
@@ -94,6 +110,8 @@ export const TextEditor = ({ initialContent }: TextEditorProps) => {
             <InitialContentPlugin 
               initialContent={initialContent || JSON.stringify(DEFAULT_CONTENT)} 
             />
+            {/* Añadir el plugin de cambios */}
+            <OnChangePlugin onChange={onChange} />
             <HistoryPlugin />
             <AutoFocusPlugin />
             <ListPlugin />

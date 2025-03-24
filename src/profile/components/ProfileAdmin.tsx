@@ -21,7 +21,7 @@ export const ProfileAdmin = ({ initialUser }: Props) => {
       ...initialUser,
       name: editForm.name,
       profile: editForm.profile,
-      text: editorContent,
+      text: editorContent, // Use the editorContent state instead
     });
 
     setIsEditing(false);
