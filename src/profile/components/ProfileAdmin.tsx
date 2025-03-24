@@ -4,6 +4,7 @@ import { User } from "@prisma/client";
 import { UpdateUser } from "../actions/user-actions";
 import { useState } from "react";
 import { TextEditor } from "@/text-editor/TextEditor";
+import { convertToHTML } from "@/text-editor/utils/convertToHtml";
 
 interface Props {
   initialUser: User;
@@ -91,7 +92,7 @@ export const ProfileAdmin = ({ initialUser }: Props) => {
               <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
                 Texto
               </label>
-              <TextEditor 
+              <TextEditor
                 initialContent={editForm.text}
                 onChange={(content) => setEditorContent(content)}
               />
@@ -128,9 +129,11 @@ export const ProfileAdmin = ({ initialUser }: Props) => {
               </p>
             </div>
             <div>
-              <p className="text-gray-600 dark:text-gray-300 whitespace-pre-wrap">
-                {editForm.text}
-              </p>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: convertToHTML(editorContent),
+                }}
+              />
             </div>
           </div>
         )}
