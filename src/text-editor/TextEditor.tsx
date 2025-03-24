@@ -1,6 +1,6 @@
 "use client";
 //Context
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ToolbarProvider } from "./context/ToolbarContext";
 
 //Lexical Plugins
@@ -25,6 +25,7 @@ import FloatingLinkEditorPlugin from "./plugins/FloatingLinkEditorPlugin";
 
 import { PreviewButton } from "./ui/PreviewButton";
 
+
 //Lexical Nodes
 import { editorNodes } from "./nodes/LexicalNodes/LexicalNodes";
 
@@ -38,6 +39,13 @@ import "./styles/Toolbar.css";
 import "./styles/Iconos.css";
 import "./styles/Dropdown.css";
 
+import { DEFAULT_CONTENT, loadContent } from './utils/convertFromJson';
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+
+interface TextEditorProps {
+  initialContent?: string;
+  onChange?: (content: string) => void;
+}
 
 const placeholder = "Enter some rich text...";
 
@@ -50,11 +58,9 @@ const editorConfig = {
   theme: TextEditorTheme,
 };
 
-export const TextEditor = () => {
+export const TextEditor = ({ initialContent }: TextEditorProps) => {
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
-
-  const [floatingAnchorElem, setFloatingAnchorElem] =
-    useState<HTMLDivElement | null>(null);
+  const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 
   const onRef = (_floatingAnchorElem: HTMLDivElement) => {
     if (_floatingAnchorElem !== null) {
@@ -85,6 +91,9 @@ export const TextEditor = () => {
               }
               ErrorBoundary={LexicalErrorBoundary}
             />
+            <InitialContentPlugin 
+              initialContent={initialContent || JSON.stringify(DEFAULT_CONTENT)} 
+            />
             <HistoryPlugin />
             <AutoFocusPlugin />
             <ListPlugin />
@@ -108,3 +117,24 @@ export const TextEditor = () => {
     </ToolbarProvider>
   );
 };
+
+// Create a new plugin to handle initial content
+function InitialContentPlugin({ initialContent }: { initialContent: string }) {
+  const [editor] = useLexicalComposerContext();
+
+  useEffect(() => {
+    try {
+      const content = typeof initialContent === 'string' 
+        ? JSON.parse(initialContent) 
+        : initialContent;
+      
+      loadContent(editor, content);
+    } catch (error) {
+      console.error('Error loading initial content:', error);
+      loadContent(editor, DEFAULT_CONTENT);
+    }
+  }, [editor, initialContent]);
+
+  return null;
+}
+

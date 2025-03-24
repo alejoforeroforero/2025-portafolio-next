@@ -12,15 +12,16 @@ interface Props {
 export const ProfileAdmin = ({ initialUser }: Props) => {
   const [editForm, setEditForm] = useState<Partial<User>>(initialUser);
   const [isEditing, setIsEditing] = useState(false);
+  const [editorContent, setEditorContent] = useState(initialUser.text || "");
 
   const handleUpdate = async () => {
-    if (!editForm.name || !editForm.profile || !editForm.text) return;
+    if (!editForm.name || !editForm.profile) return;
 
     await UpdateUser({
       ...initialUser,
       name: editForm.name,
       profile: editForm.profile,
-      text: editForm.text,
+      text: editorContent,
     });
 
     setIsEditing(false);
@@ -90,7 +91,10 @@ export const ProfileAdmin = ({ initialUser }: Props) => {
               <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
                 Texto
               </label>
-              <TextEditor />
+              <TextEditor 
+                initialContent={editForm.text}
+                onChange={(content) => setEditorContent(content)}
+              />
             </div>
 
             <div className="flex justify-end gap-2 mt-4">
