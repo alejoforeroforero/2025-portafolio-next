@@ -23,7 +23,7 @@ import FloatingLinkEditorPlugin from "./plugins/FloatingLinkEditorPlugin";
 
 //import TreeViewPlugin from "./plugins/TreeViewPlugin/TreeViewPlugin";
 
-// import { PreviewButton } from "./ui/PreviewButton";
+import { PreviewButton } from "./ui/PreviewButton";
 
 
 //Lexical Nodes
@@ -103,7 +103,7 @@ export const TextEditor = ({ initialContent, onChange }: TextEditorProps) => {
                         <div className="editor-placeholder">{placeholder}</div>
                       }
                     />
-                    {/* <PreviewButton /> */}
+                    <PreviewButton />
                   </div>
                 </div>
               }

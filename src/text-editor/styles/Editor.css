@@ -523,16 +523,22 @@ iframe {
   text-align: left;
 }
 
-.text-right {
-  text-align: right;
-}
-
 .text-center {
   text-align: center;
 }
 
+.text-right {
+  text-align: right;
+}
+
 .text-justify {
   text-align: justify;
+}
+
+/* Estilos específicos para contenedores de imágenes */
+[class*='text-'] img {
+  display: inline-block;
+  max-width: 100%;
 }
 
 /* Images */

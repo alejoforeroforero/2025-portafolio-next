@@ -57,7 +57,18 @@ interface LinkNode extends BaseNode {
   url: string;
 }
 
-type Node = RootNode | TextNode | ParagraphNode | HeadingNode | YouTubeNode | ListNode | ListItemNode | QuoteNode | LinkNode;
+interface ImageNode extends BaseNode {
+  type: 'image';
+  src: string;
+  altText: string;
+  width?: number | 'inherit';
+  height?: number | 'inherit';
+  maxWidth?: number;
+  showCaption?: boolean;
+  caption?: EditorState;
+}
+
+type Node = RootNode | TextNode | ParagraphNode | HeadingNode | YouTubeNode | ListNode | ListItemNode | QuoteNode | LinkNode | ImageNode;
 
 interface EditorState {
   root: RootNode;
@@ -213,6 +224,28 @@ function processNode(node: Node): string {
       const classAttr = classes.length > 0 ? ` class="${classes.join(' ')}"` : '';
       const content = node.children?.map(child => processNode(child as Node)).join('') || '';
       html = `<a${classAttr} href="${node.url}" target="_blank" rel="noopener noreferrer">${content}</a>`;
+      break;
+    }
+
+    case 'image': {
+      
+      
+      // Preparar los atributos de dimensiones
+      const width = node.width && node.width !== 'inherit' ? ` width="${node.width}"` : '';
+      const height = node.height && node.height !== 'inherit' ? ` height="${node.height}"` : '';
+      const maxWidth = node.maxWidth ? ` style="max-width: ${node.maxWidth}px;"` : '';
+      
+      let imageHtml = `<img src="${node.src}" alt="${node.altText}"${width}${height}${maxWidth}>`;
+      
+      // Si hay caption y showCaption es true, envolver en figure
+      if (node.showCaption && node.caption) {
+        const captionHtml = processNode(node.caption as unknown as Node);
+        imageHtml = `<figure>${imageHtml}<figcaption>${captionHtml}</figcaption></figure>`;
+      }
+
+      // Solo envolver en span para mantener el inline-block sin romper el párrafo
+      html = `<span class="editor-image">${imageHtml}</span>`;
+      
       break;
     }
   }
