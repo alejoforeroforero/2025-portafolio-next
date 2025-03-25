@@ -38,9 +38,11 @@ import "./styles/Editor.css";
 import "./styles/Toolbar.css";
 import "./styles/Iconos.css";
 import "./styles/Dropdown.css";
+import "./ui/ImageResizer.css";
 
 import { DEFAULT_CONTENT, loadContent } from './utils/convertFromJson';
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import ImagesPlugin from "./plugins/ImagesPlugin";
 
 interface TextEditorProps {
   initialContent?: string;
@@ -116,6 +118,7 @@ export const TextEditor = ({ initialContent, onChange }: TextEditorProps) => {
             <AutoFocusPlugin />
             <ListPlugin />
             <CheckListPlugin />
+            <ImagesPlugin />
             <LinkPlugin hasLinkAttributes={true} />
             {floatingAnchorElem && (
               <FloatingLinkEditorPlugin

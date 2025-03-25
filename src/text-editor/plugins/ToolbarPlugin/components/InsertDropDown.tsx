@@ -3,6 +3,8 @@ import { LexicalEditor } from "lexical";
 import { INSERT_EMBED_COMMAND } from "@lexical/react/LexicalAutoEmbedPlugin";
 import DropDown, { DropDownItem } from "../../../ui/DropDown/DropDown";
 import { EmbedConfigs } from "../../AutoEmbedPlugin";
+import useModal from "@/text-editor/hooks/useModal";
+import { InsertImageDialog } from "../../ImagesPlugin";
 
 export const InsertDropDown = ({
   editor,
@@ -11,26 +13,41 @@ export const InsertDropDown = ({
   editor: LexicalEditor;
   isEditable: boolean;
 }) => {
+  const [modal, showModal] = useModal();
   return (
-    <DropDown
-      disabled={!isEditable}
-      buttonClassName="toolbar-item spaced"
-      buttonLabel="Insert"
-      buttonAriaLabel="Insert specialized editor node"
-      buttonIconClassName="icon plus"
-    >
-      {EmbedConfigs.map((embedConfig) => (
+    <>
+      <DropDown
+        disabled={!isEditable}
+        buttonClassName="toolbar-item spaced"
+        buttonLabel="Insert"
+        buttonAriaLabel="Insert specialized editor node"
+        buttonIconClassName="icon plus"
+      >
+        {EmbedConfigs.map((embedConfig) => (
+          <DropDownItem
+            key={embedConfig.type}
+            onClick={() => {
+              editor.dispatchCommand(INSERT_EMBED_COMMAND, embedConfig.type);
+            }}
+            className="item"
+          >
+            {embedConfig.icon}
+            <span className="text">{embedConfig.contentName}</span>
+          </DropDownItem>
+        ))}
         <DropDownItem
-          key={embedConfig.type}
           onClick={() => {
-            editor.dispatchCommand(INSERT_EMBED_COMMAND, embedConfig.type);
+            showModal("Insert Image", (onClose) => (
+              <InsertImageDialog activeEditor={editor} onClose={onClose} />
+            ));
           }}
           className="item"
         >
-          {embedConfig.icon}
-          <span className="text">{embedConfig.contentName}</span>
+          <i className="icon image" />
+          <span className="text">Image</span>
         </DropDownItem>
-      ))}
-    </DropDown>
+      </DropDown>
+      {modal}
+    </>
   );
 };

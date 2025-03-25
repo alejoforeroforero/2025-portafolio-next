@@ -4,6 +4,7 @@ import { HeadingNode, QuoteNode } from "@lexical/rich-text";
 import { LinkNode, AutoLinkNode } from "@lexical/link";
 import { ListItemNode, ListNode } from "@lexical/list";
 import { YouTubeNode } from "../YouTubeNode";
+import { ImageNode } from "../ImageNode";
 
 export const editorNodes = [
   ParagraphNode,
@@ -15,4 +16,5 @@ export const editorNodes = [
   AutoLinkNode,
   ListNode,
   ListItemNode,
+  ImageNode
 ];
