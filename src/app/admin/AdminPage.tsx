@@ -4,6 +4,7 @@ import { useState } from "react";
 import { User } from "@prisma/client";
 import { ProfileAdmin } from "@/profile";
 import { ExperienceAdmin } from "@/experience";
+import { ProjectAdmin } from "@/projects";
 import { Tabs } from "@/components/Tabs";
 
 interface AdminPageProps {
@@ -16,6 +17,7 @@ export default function AdminPage({ initialUser }: AdminPageProps) {
   const tabs = [
     { id: "profile", label: "Profile" },
     { id: "experience", label: "Experience" },
+    { id: "projects", label: "Projects" },
   ];
 
   return (
@@ -35,6 +37,7 @@ export default function AdminPage({ initialUser }: AdminPageProps) {
       <div className="mt-6">
         {activeTab === "profile" && <ProfileAdmin initialUser={initialUser} />}
         {activeTab === "experience" && <ExperienceAdmin />}
+        {activeTab === "projects" && <ProjectAdmin />}
       </div>
     </div>
   );
