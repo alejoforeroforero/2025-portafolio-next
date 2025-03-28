@@ -14,14 +14,15 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  profile   String
-  text      String
+  id         String   @id @default(uuid())
+  email      String   @unique
+  password   String
+  name       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  occupation String?
+  profile    String
+  text       String
 }
 
 model Experience {
@@ -31,7 +32,7 @@ model Experience {
   link        String
   img         String?
   startDate   DateTime
-  endDate     DateTime?  // Cambiado para permitir null
+  endDate     DateTime? // Cambiado para permitir null
   position    Int
   stack       String[]
   createdAt   DateTime  @default(now())
@@ -46,7 +47,7 @@ model Project {
   img         String?
   type        String
   startDate   DateTime
-  endDate     DateTime?  // Cambiado para permitir null
+  endDate     DateTime? // Cambiado para permitir null
   position    Int
   stack       String[]
   createdAt   DateTime  @default(now())

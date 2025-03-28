@@ -22,7 +22,8 @@ export const ProfileAdmin = ({ initialUser }: Props) => {
       ...initialUser,
       name: editForm.name,
       profile: editForm.profile,
-      text: editorContent, // Use the editorContent state instead
+      occupation: editForm.occupation || null,
+      text: editorContent,
     });
 
     setIsEditing(false);
@@ -67,6 +68,21 @@ export const ProfileAdmin = ({ initialUser }: Props) => {
                 value={editForm.name || ""}
                 onChange={(e) =>
                   setEditForm({ ...editForm, name: e.target.value })
+                }
+                onKeyDown={handleKeyPress}
+                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 dark:bg-gray-700"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
+                Ocupación
+              </label>
+              <input
+                type="text"
+                value={editForm.occupation || ""}
+                onChange={(e) =>
+                  setEditForm({ ...editForm, occupation: e.target.value })
                 }
                 onKeyDown={handleKeyPress}
                 className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 dark:bg-gray-700"
@@ -122,6 +138,11 @@ export const ProfileAdmin = ({ initialUser }: Props) => {
               <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
                 {editForm.name}
               </h3>
+              {editForm.occupation && (
+                <p className="text-gray-600 dark:text-gray-400">
+                  {editForm.occupation}
+                </p>
+              )}
             </div>
             <div>
               <p className="text-gray-600 dark:text-gray-300 whitespace-pre-wrap">

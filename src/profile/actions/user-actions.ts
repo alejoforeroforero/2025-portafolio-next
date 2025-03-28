@@ -10,6 +10,7 @@ export const UpdateUser = async (data: User) => {
     data: {
       name: data.name,
       profile: data.profile,
+      occupation: data.occupation,
       text: data.text,
     },
   });
