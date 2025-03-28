@@ -393,11 +393,16 @@ pre::-webkit-scrollbar-thumb {
   overflow: hidden;
 }
 
-.PlaygroundEditorTheme__embedBlock {
+.editor-embed-block {
   user-select: none;
 }
-.PlaygroundEditorTheme__embedBlockFocus {
+
+.editor-embed-block-focus {
   outline: 2px solid rgb(60, 132, 244);
+}
+
+.editor-user {
+  color:red;
 }
 
 iframe {

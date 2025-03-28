@@ -44,9 +44,10 @@ const TextEditorTheme = {
     underlineStrikethrough: 'editor-text-underlineStrikethrough',
   },
   embedBlock: {
-    base: 'PlaygroundEditorTheme__embedBlock',
-    focus: 'PlaygroundEditorTheme__embedBlockFocus',
+    base: 'editor-embed-block',
+    focus: 'editor-embed-block-focus',
   },
+  user: 'editor-user',
 };
 
 export default TextEditorTheme;
