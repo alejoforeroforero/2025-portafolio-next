@@ -18,7 +18,7 @@ import {
   MAX_ALLOWED_FONT_SIZE,
   MIN_ALLOWED_FONT_SIZE,
   DEFAULT_FONT_SIZE,
-} from '../../../context/ToolbarContext';
+} from '../../context/ToolbarContext';
 import {updateFontSizeInSelection} from '../utils';
 
 export default function FontSize({

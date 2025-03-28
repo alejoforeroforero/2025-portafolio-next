@@ -154,7 +154,6 @@ export class YouTubeNode extends DecoratorBlockNode {
   }
 
   decorate(_editor: LexicalEditor, config: EditorConfig): JSX.Element {
-    console.log(config)
     const embedBlockTheme = config.theme.embedBlock || {};
     const className = {
       base: embedBlockTheme.base || "",

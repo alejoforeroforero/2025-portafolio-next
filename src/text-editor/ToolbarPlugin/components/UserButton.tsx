@@ -1,5 +1,5 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { INSERT_USER_COMMAND } from "../../UserPlugin";
+import { INSERT_USER_COMMAND } from "../../plugins/UserPlugin";
 
 export function UserButton() {
 

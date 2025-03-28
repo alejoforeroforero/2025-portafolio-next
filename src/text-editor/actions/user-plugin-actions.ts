@@ -22,3 +22,20 @@ export async function getCurrentUser() {
 
   return user;
 }
+
+export async function getUserById(id: string) {
+  const user = await prisma.user.findUnique({
+    where: { 
+      id: id
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      occupation: true,
+      profile: true
+    }
+  });
+
+  return user;
+}

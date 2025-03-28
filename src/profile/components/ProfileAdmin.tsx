@@ -4,11 +4,17 @@ import { User } from "@prisma/client";
 import { UpdateUser } from "../actions/user-actions";
 import { useState } from "react";
 import { TextEditor } from "@/text-editor/TextEditor";
-import { convertToHTML } from "@/text-editor/utils/convertToHtml";
+// import { convertToHTML } from "@/text-editor/utils/convertToHtml";
+import { showEditorContent } from "@/text-editor/utils/showEditorContent";
 
 interface Props {
   initialUser: User;
 }
+
+const EditorContent = ({ content }: { content: string }) => {
+  if (!content) return null;
+  return showEditorContent(content);
+};
 
 export const ProfileAdmin = ({ initialUser }: Props) => {
   const [editForm, setEditForm] = useState<Partial<User>>(initialUser);
@@ -18,7 +24,7 @@ export const ProfileAdmin = ({ initialUser }: Props) => {
   const handleUpdate = async () => {
     if (!editForm.name || !editForm.profile) return;
 
-    await UpdateUser({
+    const updatedUser = await UpdateUser({
       ...initialUser,
       name: editForm.name,
       profile: editForm.profile,
@@ -26,6 +32,9 @@ export const ProfileAdmin = ({ initialUser }: Props) => {
       text: editorContent,
     });
 
+    // Update local state with the new values
+    setEditForm(updatedUser);
+    setEditorContent(updatedUser.text || "");
     setIsEditing(false);
   };
 
@@ -149,12 +158,15 @@ export const ProfileAdmin = ({ initialUser }: Props) => {
                 {editForm.profile}
               </p>
             </div>
-            <div>
+            {/* <div>
               <div
                 dangerouslySetInnerHTML={{
                   __html: convertToHTML(editorContent),
                 }}
               />
+            </div> */}
+            <div>
+              <EditorContent content={editorContent} />
             </div>
           </div>
         )}

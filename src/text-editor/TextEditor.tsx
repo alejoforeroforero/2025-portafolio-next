@@ -13,7 +13,8 @@ import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 
 //Custom Plugins
-import ToolbarPlugin from "./plugins/ToolbarPlugin";
+// import ToolbarPlugin from "./plugins/ToolbarPlugin";
+import ToolbarPlugin from "./ToolbarPlugin";
 import LinkPlugin from "./plugins/LinkPlugin";
 import { CheckListPlugin } from "./plugins/CheckListPlugin/LexicalCheckListPlugin";
 import YouTubePlugin from "./plugins/YouTubePlugin";
@@ -23,7 +24,7 @@ import FloatingLinkEditorPlugin from "./plugins/FloatingLinkEditorPlugin";
 
 //import TreeViewPlugin from "./plugins/TreeViewPlugin/TreeViewPlugin";
 
-import { PreviewButton } from "./ui/PreviewButton";
+// import { PreviewButton } from "./ui/PreviewButton";
 
 
 //Lexical Nodes
@@ -43,7 +44,6 @@ import "./ui/ImageResizer.css";
 import { DEFAULT_CONTENT, loadContent } from './utils/convertFromJson';
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import ImagesPlugin from "./plugins/ImagesPlugin";
-import PruebaPlugin from "./plugins/PruebaPlugin";
 import UserPlugin from "./plugins/UserPlugin";
 
 interface TextEditorProps {
@@ -105,7 +105,7 @@ export const TextEditor = ({ initialContent, onChange }: TextEditorProps) => {
                         <div className="editor-placeholder">{placeholder}</div>
                       }
                     />
-                    <PreviewButton />
+                    {/* <PreviewButton /> */}
                   </div>
                 </div>
               }
@@ -121,7 +121,6 @@ export const TextEditor = ({ initialContent, onChange }: TextEditorProps) => {
             <ListPlugin />
             <CheckListPlugin />
             <ImagesPlugin />
-            <PruebaPlugin />
             <UserPlugin />
             <LinkPlugin hasLinkAttributes={true} />
             {floatingAnchorElem && (

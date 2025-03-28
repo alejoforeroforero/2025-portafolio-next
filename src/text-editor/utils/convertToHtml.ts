@@ -37,11 +37,6 @@ interface YouTubeNode extends BaseNode {
   videoID: string;
 }
 
-interface PruebaNode extends BaseNode {
-  type: "prueba";
-  userId: string;
-  __text?: string;  // Add this if needed for internal use
-}
 
 interface ListNode extends BaseNode {
   type: "list";
@@ -90,7 +85,6 @@ type Node =
   | QuoteNode
   | LinkNode
   | ImageNode
-  | PruebaNode
   | UserNode;
 
 interface EditorState {
@@ -214,37 +208,6 @@ function processNode(node: Node): string {
       break;
     }
 
-    case "prueba": {
-      const classes: string[] = [...themeClasses];
-
-      if (typeof node.format === "string") {
-        classes.push(`text-${node.format}`);
-      }
-
-      const classAttr =
-        classes.length > 0 ? ` class="${classes.join(" ")}"` : "";
-
-      html = `<div${classAttr}>
-        <div>${node.userId}</div>
-      </div>`
-      break;
-    }
-
-    case "user": {
-      const classes: string[] = [...themeClasses];
-
-      if (typeof node.format === "string") {
-        classes.push(`text-${node.format}`);
-      }
-
-      const classAttr =
-        classes.length > 0 ? ` class="${classes.join(" ")}"` : "";
-
-      html = `<div${classAttr}>
-        <div>${JSON.parse(node.userId).name}</div>
-      </div>`
-      break;
-    }
 
     case "list": {
       const classes: string[] = [...themeClasses];
@@ -323,10 +286,27 @@ function processNode(node: Node): string {
 
       break;
     }
+
+    case "user": {
+      const classes: string[] = [...themeClasses];
+
+      if (typeof node.format === "string") {
+        classes.push(`text-${node.format}`);
+      }
+
+      const classAttr =
+        classes.length > 0 ? ` class="${classes.join(" ")}"` : "";
+
+      html = `<div${classAttr}>
+        <div>${JSON.parse(node.userId).name}</div>
+      </div>`
+      break;
+    }
   }
 
   return html;
 }
+
 
 function getThemeClasses(node: Node): string[] {
   const classes: string[] = [];
@@ -358,9 +338,6 @@ function getThemeClasses(node: Node): string[] {
       break;
     case "link":
       classes.push("editor-link");
-      break;
-    case "prueba":
-      classes.push("bg-blue-100", "p-4", "rounded-lg", "shadow-md", "hover:bg-blue-200", "transition-colors");
       break;
     case "user":
       classes.push("bg-blue-100", "p-4", "rounded-lg", "shadow-md", "hover:bg-blue-200", "transition-colors");

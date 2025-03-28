@@ -1,10 +1,10 @@
 
 'use client';
 import type { JSX } from "react";
-import DropDown, { DropDownItem } from "../../../ui/DropDown/DropDown";
-import Divider from "../../../ui/General/Divider";
+import DropDown, { DropDownItem } from "../../ui/DropDown/DropDown";
+import Divider from "../../ui/General/Divider";
 
-import { SHORTCUTS } from "../../ShortcutsPlugin/shortcuts";
+import { SHORTCUTS } from "../../plugins/ShortcutsPlugin/shortcuts";
 
 import {
     FORMAT_ELEMENT_COMMAND,   

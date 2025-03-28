@@ -16,7 +16,7 @@ import {
   LexicalCommand,
 } from "lexical";
 import { useEffect, useState } from "react";
-import { getCurrentUser } from "./actions";
+import { getCurrentUser } from "../../actions/user-plugin-actions";
 import { $createUserNode, UserNode } from "../../nodes/UserNode";
 
 export const INSERT_USER_COMMAND: LexicalCommand<string> = createCommand(

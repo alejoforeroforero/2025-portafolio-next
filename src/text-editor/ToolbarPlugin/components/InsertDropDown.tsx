@@ -1,10 +1,10 @@
 "use client";
 import { LexicalEditor } from "lexical";
 import { INSERT_EMBED_COMMAND } from "@lexical/react/LexicalAutoEmbedPlugin";
-import DropDown, { DropDownItem } from "../../../ui/DropDown/DropDown";
-import { EmbedConfigs } from "../../AutoEmbedPlugin";
+import DropDown, { DropDownItem } from "../../../text-editor/ui/DropDown/DropDown";
+import { EmbedConfigs } from "../../../text-editor/plugins/AutoEmbedPlugin";
 import useModal from "@/text-editor/hooks/useModal";
-import { InsertImageDialog } from "../../ImagesPlugin";
+import { InsertImageDialog } from "../../../text-editor/plugins/ImagesPlugin";
 
 export const InsertDropDown = ({
   editor,

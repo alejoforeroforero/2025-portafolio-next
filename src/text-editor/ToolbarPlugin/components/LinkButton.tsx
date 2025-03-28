@@ -3,8 +3,8 @@
 import { useCallback } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { TOGGLE_LINK_COMMAND } from "@lexical/link";
-import { useToolbarState } from "../../../context/ToolbarContext";
-import { sanitizeUrl } from "../../../utils/url";
+import { useToolbarState } from "../../context/ToolbarContext";
+import { sanitizeUrl } from "../../utils/url";
 
 const SHORTCUTS = {
   INSERT_LINK: "⌘K"

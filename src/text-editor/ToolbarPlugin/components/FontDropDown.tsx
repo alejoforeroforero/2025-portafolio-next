@@ -4,7 +4,7 @@ import { LexicalEditor } from 'lexical';
 import { $getSelection } from 'lexical';
 import { $patchStyleText } from '@lexical/selection';
 import { JSX, useCallback } from 'react';
-import DropDown, { DropDownItem } from '../../../ui/DropDown/DropDown';
+import DropDown, { DropDownItem } from '../../ui/DropDown/DropDown';
 
 const FONT_FAMILY_OPTIONS: [string, string][] = [
   ['Arial', 'Arial'],

@@ -1,11 +1,11 @@
 'use client';
 import type { JSX } from "react";
-import { blockTypeToBlockName } from "../../../context/ToolbarContext";
-import DropDown, { DropDownItem } from "../../../ui/DropDown/DropDown";
+import { blockTypeToBlockName } from "../../../text-editor/context/ToolbarContext";
+import DropDown, { DropDownItem } from "../../ui/DropDown/DropDown";
 
 import { LexicalEditor } from "lexical";
 
-import { SHORTCUTS } from "../../ShortcutsPlugin/shortcuts";
+import { SHORTCUTS } from "../../plugins/ShortcutsPlugin/shortcuts";
 
 import {
   formatBulletList,

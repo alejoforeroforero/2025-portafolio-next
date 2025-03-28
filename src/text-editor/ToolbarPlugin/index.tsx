@@ -1,10 +1,10 @@
 "use client";
 
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { useToolbarState } from "../../context/ToolbarContext";
+import { useToolbarState } from "../context/ToolbarContext";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getSelectedNode } from "../../../text-editor/utils/getSelectedNode";
+import { getSelectedNode } from "../../text-editor/utils/getSelectedNode";
 import { UndoButton } from "./components/UndoButton";
 import { RedoButton } from "./components/RedoButton";
 import { BoldButton } from "./components/BoldButton";
@@ -14,11 +14,11 @@ import { StrikeThroughButton } from "./components/StrikeThroughButton";
 import { LinkButton } from "./components/LinkButton";
 import FontSize from "./components/fontSize";
 import FontDropDown from "./components/FontDropDown";
-import { PruebaBoton } from "./components/PruebaBoton";
+
 
 import BlockFormatDropDown from "./components/BlockFormatDropDown";
 import ElementFormatDropdown from "./components/ElementFormatDropdown";
-import Divider from "../../ui/General/Divider";
+import Divider from "../ui/General/Divider";
 import { FontColorPicker } from "./components/FontColorPicker";
 import { BackgroundColorPicker } from "./components/BackgroundColorPicker";
 import { InsertDropDown } from "./components/InsertDropDown";
@@ -169,7 +169,6 @@ export default function ToolbarPlugin() {
         isEditable={isEditable}
         setIsLinkEditMode={setIsLinkEditMode}
       />
-      <PruebaBoton isEditable={isEditable} />
       <UserButton />
       <FontColorPicker disabled={!isEditable} color={toolbarState.fontColor} />
       <BackgroundColorPicker

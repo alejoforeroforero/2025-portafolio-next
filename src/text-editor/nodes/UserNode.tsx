@@ -34,7 +34,7 @@ function UserComponent({
   nodeKey,
   userId,
 }: UserNodeComponentProps) {
-  console.log('llega a user');
+ 
   return (
     <BlockWithAlignableContents
       className={className}
@@ -57,6 +57,7 @@ function $convertUserElement(
   domNode: HTMLElement
 ): null | DOMConversionOutput {
   const userId = domNode.getAttribute("data-lexical-user");
+
   if (userId) {
     const node = $createUserNode(userId);
     return { node };
@@ -129,6 +130,7 @@ export class UserNode extends DecoratorBlockNode {
         };
       },
     };
+    return null;
   }
 
   updateDOM(): false {
@@ -144,7 +146,6 @@ export class UserNode extends DecoratorBlockNode {
   }
 
   decorate(_editor: LexicalEditor, config: EditorConfig): JSX.Element {
-    console.log(config)
     const embedBlockTheme = config.theme.embedBlock || {};
     const className = {
       base: embedBlockTheme.base || "",

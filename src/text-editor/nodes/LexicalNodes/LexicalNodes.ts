@@ -5,7 +5,6 @@ import { LinkNode, AutoLinkNode } from "@lexical/link";
 import { ListItemNode, ListNode } from "@lexical/list";
 import { YouTubeNode } from "../YouTubeNode";
 import { ImageNode } from "../ImageNode";
-import { PruebaNode } from "../PruebaNode";
 import { UserNode } from "../UserNode";
 
 export const editorNodes = [
@@ -19,6 +18,5 @@ export const editorNodes = [
   ListNode,
   ListItemNode,
   ImageNode,
-  PruebaNode, 
   UserNode
 ];

@@ -1,20 +1,21 @@
+
 'use client';
 
 import { useCallback } from 'react';
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $getSelection } from "lexical";
 import { $patchStyleText } from "@lexical/selection";
-import DropdownColorPicker from '../../../ui/DropdownColorPicker';
+import DropdownColorPicker from '../../ui/DropdownColorPicker';
 
-interface BackgroundColorPickerProps {
+interface FontColorPickerProps {
   disabled: boolean;
   color: string;
 }
 
-export function BackgroundColorPicker({ 
+export function FontColorPicker({ 
   disabled, 
   color
-}: BackgroundColorPickerProps) {
+}: FontColorPickerProps) {
   const [editor] = useLexicalComposerContext();
 
   const applyStyleText = useCallback(
@@ -32,9 +33,9 @@ export function BackgroundColorPicker({
     [editor]
   );
 
-  const onBgColorSelect = useCallback(
+  const onFontColorSelect = useCallback(
     (value: string, skipHistoryStack: boolean) => {
-      applyStyleText({'background-color': value}, skipHistoryStack);
+      applyStyleText({ color: value }, skipHistoryStack);
     },
     [applyStyleText]
   );
@@ -43,11 +44,12 @@ export function BackgroundColorPicker({
     <DropdownColorPicker
       disabled={disabled}
       buttonClassName="toolbar-item color-picker"
-      buttonAriaLabel="Formatting background color"
-      buttonIconClassName="icon bg-color"
+      buttonAriaLabel="Formatting text color"
+      buttonIconClassName="icon font-color"
       color={color}
-      onChange={onBgColorSelect}
-      title="background color"
+      onChange={onFontColorSelect}
+      title="text color"
     />
   );
 }
+
