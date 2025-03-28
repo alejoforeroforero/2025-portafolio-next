@@ -5,7 +5,7 @@ import { UpdateUser } from "../actions/user-actions";
 import { useState } from "react";
 import { TextEditor } from "@/text-editor/TextEditor";
 // import { convertToHTML } from "@/text-editor/utils/convertToHtml";
-import { showEditorContent } from "@/text-editor/utils/showEditorContent";
+import { showEditorContent } from "@/text-editor/react-components/showEditorContent";
 
 interface Props {
   initialUser: User;

@@ -1,7 +1,8 @@
 
 
-import React, { JSX, useEffect, useState } from 'react';
-import { getUserById } from '../actions/user-plugin-actions';
+import React, { JSX } from 'react';
+
+import { ReactUserNode } from "./react-nodes/ReactUserNode";
 
 interface BaseNode {
     type: string;
@@ -174,18 +175,15 @@ function generateHTML(node: Node): JSX.Element | JSX.Element[] | string {
     }
 
     case "user": {
-        return GenerateUserHTML(node);
-    //   try {
-    //     const userData = JSON.parse(node.userId);
-    //     return (
-    //       <div className="bg-blue-100 p-4 rounded-lg shadow-md hover:bg-blue-200 transition-colors">
-    //         <div>{userData.name}</div>
-    //       </div>
-    //     );
-    //   } catch (error) {
-    //     console.error("Error parsing user data:", error);
-    //     return <div>Invalid user data</div>;
-    //   }
+        const { type, userId, className, style } = node;
+        return <ReactUserNode 
+            type={type}
+            version={1}
+            format={node.format}
+            userId={userId}
+            className={className}
+            style={style}
+        />;
     }
 
     default:
@@ -193,48 +191,48 @@ function generateHTML(node: Node): JSX.Element | JSX.Element[] | string {
   }
 }
 
-const GenerateUserHTML = (node: UserNode): JSX.Element => {
+// const GenerateUserHTML = (node: UserNode): JSX.Element => {
 
-    const [user, setUser] = useState<{
-        id: string;
-        email: string;
-        name: string;
-        occupation: string | null;
-        profile: string;
-    } | null>(null);
+//     const [user, setUser] = useState<{
+//         id: string;
+//         email: string;
+//         name: string;
+//         occupation: string | null;
+//         profile: string;
+//     } | null>(null);
 
-    useEffect(() => {
-        let isSubscribed = true;
+//     useEffect(() => {
+//         let isSubscribed = true;
         
-        const fetchUser = async () => {
-            try {
-                const userData = JSON.parse(node.userId);
-                const fetchedUser = await getUserById(userData.id);
-                if (isSubscribed) {
-                    setUser(fetchedUser);
-                }
-            } catch (error) {
-                console.error("Error parsing user data:", error);
-            }
-        };
+//         const fetchUser = async () => {
+//             try {
+//                 const userData = JSON.parse(node.userId);
+//                 const fetchedUser = await getUserById(userData.id);
+//                 if (isSubscribed) {
+//                     setUser(fetchedUser);
+//                 }
+//             } catch (error) {
+//                 console.error("Error parsing user data:", error);
+//             }
+//         };
 
-        fetchUser();
+//         fetchUser();
 
-        return () => {
-            isSubscribed = false;
-        };
-    }, [node.userId]);
+//         return () => {
+//             isSubscribed = false;
+//         };
+//     }, [node.userId]);
 
-    const classes = node.className || '';
+//     const classes = node.className || '';
 
-    const style = node.style ? parseStyle(node.style) : {};
+//     const style = node.style ? parseStyle(node.style) : {};
 
-    return (
-        <div className={classes} style={style}>
-            <div>{user?.name || 'Loading...'}</div>
-        </div>
-    );
-}; // Helper function to parse style strings
+//     return (
+//         <div className={classes} style={style}>
+//             <div>{user?.name || 'Loading...'}</div>
+//         </div>
+//     );
+// }; // Helper function to parse style strings
 function parseStyle(styleString: string): React.CSSProperties {
   if (!styleString) return {};
   
