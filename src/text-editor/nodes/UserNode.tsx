@@ -34,10 +34,12 @@ function UserComponent({
   nodeKey,
   userId,
 }: UserNodeComponentProps) {
- 
   return (
     <BlockWithAlignableContents
-      className={className}
+      className={{
+        ...className,
+        base: `${className.base}` 
+      }}
       format={format}
       nodeKey={nodeKey}
     >
@@ -49,6 +51,7 @@ function UserComponent({
 export type SerializedUserNode = Spread<
   {
     userId: string;
+    className: string;
   },
   SerializedDecoratorBlockNode
 >;
@@ -67,31 +70,39 @@ function $convertUserElement(
 
 export class UserNode extends DecoratorBlockNode {
   __id: string;
+  __className: string;
 
   static getType(): string {
     return "user";
   }
 
   static clone(node: UserNode): UserNode {
-    return new UserNode(node.__id, node.__format, node.__key);
+    return new UserNode(node.__id, node.__format, node.__key, node.__className);
   }
 
   static importJSON(serializedNode: SerializedUserNode): UserNode {
-    return $createUserNode(serializedNode.userId).updateFromJSON(
-      serializedNode
-    );
+    const node = $createUserNode(serializedNode.userId);
+    node.__className = 'editor-user';
+    return node.updateFromJSON(serializedNode);
   }
 
   exportJSON(): SerializedUserNode {
     return {
       ...super.exportJSON(),
       userId: this.__id,
+      className: this.__className,
     };
   }
 
-  constructor(id: string, format?: ElementFormatType, key?: NodeKey) {
+  constructor(
+    id: string, 
+    format?: ElementFormatType, 
+    key?: NodeKey,
+    className: string = 'editor-user'
+  ) {
     super(format, key);
     this.__id = id;
+    this.__className = className;
   }
 
   exportDOM(): DOMExportOutput {
@@ -145,11 +156,15 @@ export class UserNode extends DecoratorBlockNode {
     return `https://www.youtube.com/watch?v=${this.__id}`;
   }
 
+  getClassName(): string {
+    return this.__className;
+  }
+
   decorate(_editor: LexicalEditor, config: EditorConfig): JSX.Element {
     const embedBlockTheme = config.theme.embedBlock || {};
     const className = {
-      base: embedBlockTheme.base || "",
-      focus: embedBlockTheme.focus || "",
+      base: `${embedBlockTheme.base || ''} ${this.__className}`,
+      focus: embedBlockTheme.focus || '',
     };
     return (
       <UserComponent

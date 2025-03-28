@@ -403,6 +403,7 @@ pre::-webkit-scrollbar-thumb {
 
 .editor-user {
   color:red;
+  background-color: #000;
 }
 
 iframe {

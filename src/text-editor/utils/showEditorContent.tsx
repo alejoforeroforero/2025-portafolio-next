@@ -78,6 +78,8 @@ interface BaseNode {
   interface UserNode extends BaseNode {
     type: "user";
     userId: string;
+    className?: string;
+    style?: string;
   }
   
   type Node =
@@ -192,6 +194,7 @@ function generateHTML(node: Node): JSX.Element | JSX.Element[] | string {
 }
 
 const GenerateUserHTML = (node: UserNode): JSX.Element => {
+
     const [user, setUser] = useState<{
         id: string;
         email: string;
@@ -220,11 +223,14 @@ const GenerateUserHTML = (node: UserNode): JSX.Element => {
         return () => {
             isSubscribed = false;
         };
-    }, [node.userId]); // Add node.userId as dependency since we need to react to changes
+    }, [node.userId]);
 
-    // Render after all hooks are called
+    const classes = node.className || '';
+
+    const style = node.style ? parseStyle(node.style) : {};
+
     return (
-        <div className="bg-blue-100 p-4 rounded-lg shadow-md hover:bg-blue-200 transition-colors">
+        <div className={classes} style={style}>
             <div>{user?.name || 'Loading...'}</div>
         </div>
     );
