@@ -1,4 +1,3 @@
-
 import type {
   DOMConversionMap,
   DOMConversionOutput,
@@ -21,27 +20,23 @@ import * as React from "react";
 type PruebaComponentProps = Readonly<{
   className: string;
   nodeKey: NodeKey;
-  text: string;
+  userId: string;
 }>;
 
-function PruebaComponent({
-  className,
-  nodeKey,
-  text,
-}: PruebaComponentProps) {
+function PruebaComponent({ className, nodeKey, userId }: PruebaComponentProps) {
   return (
-    <div 
+    <div
       className={`${className} bg-blue-100 p-4 rounded-lg shadow-md hover:bg-blue-200 transition-colors`}
       data-lexical-node-key={nodeKey}
     >
-      {text}
+      {userId}
     </div>
   );
 }
 
 export type SerializedPruebaNode = Spread<
   {
-    text: string;
+    userId: string;
   },
   SerializedDecoratorBlockNode
 >;
@@ -69,7 +64,7 @@ export class PruebaNode extends DecoratorBlockNode {
   }
 
   static importJSON(serializedNode: SerializedPruebaNode): PruebaNode {
-    return $createPruebaNode(serializedNode.text).updateFromJSON(
+    return $createPruebaNode(serializedNode.userId).updateFromJSON(
       serializedNode
     );
   }
@@ -77,8 +72,8 @@ export class PruebaNode extends DecoratorBlockNode {
   exportJSON(): SerializedPruebaNode {
     return {
       ...super.exportJSON(),
-      text: this.__text,
-      type: 'prueba',
+      userId: this.__text,
+      type: "prueba",
       version: 1,
     };
   }
@@ -121,7 +116,7 @@ export class PruebaNode extends DecoratorBlockNode {
       <PruebaComponent
         className={config.theme.prueba || ""}
         nodeKey={this.getKey()}
-        text={this.__text}
+        userId={this.__text}
       />
     );
   }
@@ -136,4 +131,3 @@ export function $isPruebaNode(
 ): node is PruebaNode {
   return node instanceof PruebaNode;
 }
-

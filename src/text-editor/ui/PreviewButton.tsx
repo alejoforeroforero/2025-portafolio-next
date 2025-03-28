@@ -14,9 +14,10 @@ export const PreviewButton = () => {
   const handleClick = () => {
     const editorState = editor.getEditorState();
     const json = editorState.toJSON();
+    console.log('Preview JSON:', json); // Add this to debug
     const jsonText = JSON.stringify(json);  
-
     const htmlContent = convertToHTML(jsonText);
+    console.log('Generated HTML:', htmlContent); // Add this to debug
     setPreviewContent(htmlContent);
     setShowPreview(true);
   };
