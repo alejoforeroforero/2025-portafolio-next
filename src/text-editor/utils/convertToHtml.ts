@@ -74,6 +74,11 @@ interface ImageNode extends BaseNode {
   caption?: EditorState;
 }
 
+interface UserNode extends BaseNode {
+  type: "user";
+  userId: string;
+}
+
 type Node =
   | RootNode
   | TextNode
@@ -85,7 +90,8 @@ type Node =
   | QuoteNode
   | LinkNode
   | ImageNode
-  | PruebaNode;
+  | PruebaNode
+  | UserNode;
 
 interface EditorState {
   root: RootNode;
@@ -224,6 +230,22 @@ function processNode(node: Node): string {
       break;
     }
 
+    case "user": {
+      const classes: string[] = [...themeClasses];
+
+      if (typeof node.format === "string") {
+        classes.push(`text-${node.format}`);
+      }
+
+      const classAttr =
+        classes.length > 0 ? ` class="${classes.join(" ")}"` : "";
+
+      html = `<div${classAttr}>
+        <div>${JSON.parse(node.userId).name}</div>
+      </div>`
+      break;
+    }
+
     case "list": {
       const classes: string[] = [...themeClasses];
 
@@ -338,6 +360,9 @@ function getThemeClasses(node: Node): string[] {
       classes.push("editor-link");
       break;
     case "prueba":
+      classes.push("bg-blue-100", "p-4", "rounded-lg", "shadow-md", "hover:bg-blue-200", "transition-colors");
+      break;
+    case "user":
       classes.push("bg-blue-100", "p-4", "rounded-lg", "shadow-md", "hover:bg-blue-200", "transition-colors");
       break;
   }

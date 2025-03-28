@@ -34,6 +34,7 @@ import {
   SELECTION_CHANGE_COMMAND,
   $isElementNode,
 } from "lexical";
+import { UserButton } from "./components/UserButton";
 
 const LowPriority = 1;
 
@@ -169,6 +170,7 @@ export default function ToolbarPlugin() {
         setIsLinkEditMode={setIsLinkEditMode}
       />
       <PruebaBoton isEditable={isEditable} />
+      <UserButton />
       <FontColorPicker disabled={!isEditable} color={toolbarState.fontColor} />
       <BackgroundColorPicker
         disabled={!isEditable}

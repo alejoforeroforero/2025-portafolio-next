@@ -6,6 +6,7 @@ import { ListItemNode, ListNode } from "@lexical/list";
 import { YouTubeNode } from "../YouTubeNode";
 import { ImageNode } from "../ImageNode";
 import { PruebaNode } from "../PruebaNode";
+import { UserNode } from "../UserNode";
 
 export const editorNodes = [
   ParagraphNode,
@@ -18,5 +19,6 @@ export const editorNodes = [
   ListNode,
   ListItemNode,
   ImageNode,
-  PruebaNode
+  PruebaNode, 
+  UserNode
 ];

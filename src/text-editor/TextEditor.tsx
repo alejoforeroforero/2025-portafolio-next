@@ -44,6 +44,7 @@ import { DEFAULT_CONTENT, loadContent } from './utils/convertFromJson';
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import ImagesPlugin from "./plugins/ImagesPlugin";
 import PruebaPlugin from "./plugins/PruebaPlugin";
+import UserPlugin from "./plugins/UserPlugin";
 
 interface TextEditorProps {
   initialContent?: string;
@@ -121,6 +122,7 @@ export const TextEditor = ({ initialContent, onChange }: TextEditorProps) => {
             <CheckListPlugin />
             <ImagesPlugin />
             <PruebaPlugin />
+            <UserPlugin />
             <LinkPlugin hasLinkAttributes={true} />
             {floatingAnchorElem && (
               <FloatingLinkEditorPlugin

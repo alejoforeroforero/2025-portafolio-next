@@ -27,7 +27,7 @@ import { DialogActions } from "../../ui/Dialog";
 
 import { INSERT_YOUTUBE_COMMAND } from "../YouTubePlugin";
 
-import './index.css'
+import "./index.css";
 
 interface PlaygroundEmbedConfig extends EmbedConfig {
   // Human readable name of the embeded content e.g. Tweet or Google Map.
