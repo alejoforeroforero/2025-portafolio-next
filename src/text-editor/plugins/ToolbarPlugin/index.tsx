@@ -14,6 +14,7 @@ import { StrikeThroughButton } from "./components/StrikeThroughButton";
 import { LinkButton } from "./components/LinkButton";
 import FontSize from "./components/fontSize";
 import FontDropDown from "./components/FontDropDown";
+import { PruebaBoton } from "./components/PruebaBoton";
 
 import BlockFormatDropDown from "./components/BlockFormatDropDown";
 import ElementFormatDropdown from "./components/ElementFormatDropdown";
@@ -167,6 +168,7 @@ export default function ToolbarPlugin() {
         isEditable={isEditable}
         setIsLinkEditMode={setIsLinkEditMode}
       />
+      <PruebaBoton isEditable={isEditable} />
       <FontColorPicker disabled={!isEditable} color={toolbarState.fontColor} />
       <BackgroundColorPicker
         disabled={!isEditable}

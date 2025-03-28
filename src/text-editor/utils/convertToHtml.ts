@@ -37,6 +37,11 @@ interface YouTubeNode extends BaseNode {
   videoID: string;
 }
 
+// interface YouTubeNode extends BaseNode {
+//   // type: 'drum-patter';
+//   // videoID: string;
+// }
+
 interface ListNode extends BaseNode {
   type: 'list';
   listType: 'bullet' | 'number' | 'check';
@@ -68,7 +73,12 @@ interface ImageNode extends BaseNode {
   caption?: EditorState;
 }
 
-type Node = RootNode | TextNode | ParagraphNode | HeadingNode | YouTubeNode | ListNode | ListItemNode | QuoteNode | LinkNode | ImageNode;
+interface PruebaNode extends BaseNode {
+  type: 'prueba';
+  text: string;
+}
+
+type Node = RootNode | TextNode | ParagraphNode | HeadingNode | YouTubeNode | ListNode | ListItemNode | QuoteNode | LinkNode | ImageNode | PruebaNode;
 
 interface EditorState {
   root: RootNode;
@@ -248,6 +258,27 @@ function processNode(node: Node): string {
       
       break;
     }
+
+    case 'prueba': {
+      const classes = [
+        ...themeClasses,
+        'bg-blue-100',
+        'p-4',
+        'rounded-lg',
+        'shadow-md',
+        'hover:bg-blue-200',
+        'transition-colors'
+      ];
+      
+      const classAttr = classes.length > 0 ? ` class="${classes.join(' ')}"` : '';
+      html = `<div${classAttr}>${node.text}</div>`;
+      break;
+    }
+
+    // case 'react-ssss':{
+
+    // }
+ 
   }
 
   return html;
@@ -283,6 +314,9 @@ function getThemeClasses(node: Node): string[] {
       break;
     case 'link':
       classes.push('editor-link');
+      break;
+    case 'prueba':
+      classes.push('prueba-node');
       break;
   }
 

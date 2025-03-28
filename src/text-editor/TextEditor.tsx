@@ -43,6 +43,7 @@ import "./ui/ImageResizer.css";
 import { DEFAULT_CONTENT, loadContent } from './utils/convertFromJson';
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import ImagesPlugin from "./plugins/ImagesPlugin";
+import PruebaPlugin from "./plugins/PruebaPlugin";
 
 interface TextEditorProps {
   initialContent?: string;
@@ -119,6 +120,7 @@ export const TextEditor = ({ initialContent, onChange }: TextEditorProps) => {
             <ListPlugin />
             <CheckListPlugin />
             <ImagesPlugin />
+            <PruebaPlugin />
             <LinkPlugin hasLinkAttributes={true} />
             {floatingAnchorElem && (
               <FloatingLinkEditorPlugin
