@@ -5,7 +5,7 @@ export default async function Experience() {
   const experiences = await getWebsiteExperiences();
 
   return (
-    <div className="max-w-4xl my-[90px]">
+    <div className="max-w-4xl p-[60px]">
       <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-gray-100">Experience</h1>
       <div className="space-y-8">
         {experiences.map((experience) => (

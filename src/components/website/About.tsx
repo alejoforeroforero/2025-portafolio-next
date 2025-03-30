@@ -1,6 +1,4 @@
-
 import { getWebsiteUser } from "./actions/website-actions";
-
 
 export default async function About() {
   const user = await getWebsiteUser();
@@ -10,15 +8,12 @@ export default async function About() {
   }
 
   return (
-    <div className="max-w-4xl">
-      <h3 className="text-xl font-semibold mb-2">{user.name}</h3>
-      {user.occupation && (
-        <p className="text-gray-600 dark:text-gray-300 mb-4">{user.occupation}</p>
-      )}
-      <div className="prose dark:prose-invert">
-        <div className="mb-6">{user.profile}</div>
-        {user.text}
-      </div>
+    <div className="max-w-4xl p-[60px]">
+      <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-gray-100">
+        About
+      </h1>
+
+      <div className="prose dark:prose-invert">{user.text}</div>
     </div>
   );
 }

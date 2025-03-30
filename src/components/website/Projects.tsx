@@ -5,7 +5,7 @@ export default async function Projects() {
   const projects = await getWebsiteProjects();
 
   return (
-    <div className="max-w-4xl">
+    <div className="max-w-4xl p-[60px]">
       <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-gray-100">Projects</h1>
       <div className="space-y-8">
         {projects.map((project) => (
