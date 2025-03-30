@@ -140,6 +140,7 @@ pre::-webkit-scrollbar-thumb {
 
 .editor-text-bold {
   font-weight: bold;
+  color: #fff;
 }
 
 .editor-text-italic {

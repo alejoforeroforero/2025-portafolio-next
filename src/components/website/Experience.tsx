@@ -9,7 +9,10 @@ export default async function Experience() {
       <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-gray-100">Experience</h1>
       <div className="space-y-8">
         {experiences.map((experience) => (
-          <div key={experience.id} className="border-b border-gray-200 dark:border-gray-700 pb-8">
+          <div 
+            key={experience.id} 
+            className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6 transition-colors"
+          >
             <h4 className="text-lg font-medium mb-2">{experience.title}</h4>
             <p className="text-gray-600 dark:text-gray-300 mb-3">{experience.description}</p>
             <div className="text-sm text-gray-500 dark:text-gray-400">

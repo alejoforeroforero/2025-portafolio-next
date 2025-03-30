@@ -1,4 +1,5 @@
 import { getWebsiteUser } from "./actions/website-actions";
+import { EditorContentClient } from "./EditorContentClient";
 
 export default async function About() {
   const user = await getWebsiteUser();
@@ -13,7 +14,9 @@ export default async function About() {
         About
       </h1>
 
-      <div className="prose dark:prose-invert">{user.text}</div>
+      <div className="prose dark:prose-invert">
+        <EditorContentClient content={user.text} />
+      </div>
     </div>
   );
 }
