@@ -154,8 +154,8 @@ export const ProfileAdmin = ({ initialUser }: Props) => {
               )}
             </div>
             <div>
-              <p className="text-gray-600 dark:text-gray-300 whitespace-pre-wrap">
-                {editForm.profile}
+              <p className="text-blue-500 dark:text-gray-300 whitespace-pre-wrap">
+                {editForm.profile} kkkk
               </p>
             </div>
             {/* <div>
