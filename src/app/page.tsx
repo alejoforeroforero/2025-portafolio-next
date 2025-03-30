@@ -8,9 +8,9 @@ export default function Home() {
   return (
     <>
       <main className="min-h-screen flex flex-col md:flex-row">
-        <header className="w-full md:fixed md:h-screen md:w-[30%] bg-background border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800 z-10">
+        <header className="w-full p-10 md:fixed md:h-screen md:w-[30%] bg-background border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800 z-10">
           <Header />
-          <nav className="hidden md:block">
+          <nav className="hidden md:block p-8">
             <Menu />
           </nav>
         </header>

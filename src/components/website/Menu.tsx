@@ -25,25 +25,25 @@ export const Menu = () => {
         {menuItems.map((item) => (
           <div key={item.id} className="flex items-center gap-2">
             <div
-              className={`h-[1px] transition-all duration-900 ease-in-out bg-gray-600 dark:bg-gray-300 ${
-                selected === item.id ? "w-[50px]" : "w-[20px]"
+              className={`h-[1px] transition-all duration-2000 ease-in-out ${
+                selected === item.id ? "w-[35px] bg-gray-300" : "w-[20px] bg-[rgb(75,85,99)]"
               }`}
             />
             <div
               onClick={() => handleClick(item.id)}
-              className="cursor-pointer relative"
+              className="cursor-pointer relative group"
             >
               <span
-                className={`absolute text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all duration-500 ease-in-out font-bold ${
+                className={`absolute text-white transition-all duration-2000 ease-in-out font-bold ${
                   selected === item.id ? "opacity-100" : "opacity-0"
-                }`}
+                } group-hover:text-white`}
               >
                 {item.label}
               </span>
               <span
-                className={`text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-all duration-500 ease-in-out ${
+                className={`text-[rgb(75,85,99)] transition-all duration-500 ease-in-out ${
                   selected === item.id ? "opacity-0" : "opacity-100"
-                }`}
+                } group-hover:text-white`}
               >
                 {item.label}
               </span>
