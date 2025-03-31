@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const Menu = () => {
   const [selected, setSelected] = useState("about");
@@ -10,6 +10,32 @@ export const Menu = () => {
     { id: "experience", label: "Experience" },
     { id: "projects", label: "Projects" },
   ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = menuItems.map(item => {
+        const element = document.getElementById(item.id);
+        if (!element) return { id: item.id, position: 0 };
+        const rect = element.getBoundingClientRect();
+        return {
+          id: item.id,
+          position: Math.abs(rect.top)
+        };
+      });
+
+      const closest = sections.reduce((prev, curr) => 
+        prev.position < curr.position ? prev : curr
+      );
+
+      setSelected(closest.id);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    // Initial check
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleClick = (id: string) => {
     setSelected(id);
