@@ -4,6 +4,13 @@ import { getWebsiteExperiences } from "./actions/website-actions";
 export default async function Experience() {
   const experiences = await getWebsiteExperiences();
 
+  const formatDate = (date: Date) => {
+    return new Date(date).toLocaleDateString('en-US', {
+      month: 'short',
+      year: 'numeric'
+    });
+  };
+
   return (
     <div className="max-w-4xl p-[60px]">
       <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-gray-100">Experience</h1>
@@ -11,26 +18,42 @@ export default async function Experience() {
         {experiences.map((experience) => (
           <div 
             key={experience.id} 
-            className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6 transition-colors"
+            className="grid grid-cols-[150px_1fr]"
           >
-            <h4 className="text-lg font-medium mb-2">{experience.title}</h4>
-            <p className="text-gray-600 dark:text-gray-300 mb-3">{experience.description}</p>
-            <div className="text-sm text-gray-500 dark:text-gray-400">
-              <p>
-                {new Date(experience.startDate).toLocaleDateString()} - {" "}
-                {experience.endDate ? new Date(experience.endDate).toLocaleDateString() : "Present"}
+            {/* Left column - Date */}
+            <div className="text-sm mt-1">
+              <p style={{ color: '#4b5563' }}>
+                {formatDate(experience.startDate)} - {" "}
+                {experience.endDate ? formatDate(experience.endDate) : "Present"}
               </p>
-              <p className="mt-2">Stack: {experience.stack.join(", ")}</p>
-              {experience.link && (
-                <a 
-                  href={experience.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sky-500 hover:text-sky-700 mt-2 inline-block"
-                >
-                  View Project
-                </a>
-              )}
+            </div>
+
+            {/* Right column - Experience details */}
+            <div>
+              <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100">{experience.title}</h4>
+              <p className="text-gray-600 dark:text-gray-300 mt-3 mb-3">{experience.description}</p>
+              <div className="text-sm text-gray-500 dark:text-gray-400">
+                <div className="flex flex-wrap gap-2">
+                  {experience.stack.map((tech, index) => (
+                    <span 
+                      key={index} 
+                      className="px-2 py-1 bg-[rgb(75,85,99)] text-white rounded"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                {experience.link && (
+                  <a 
+                    href={experience.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-5 inline-flex items-center text-sky-500 hover:text-sky-300 transition-colors group"
+                  >
+                    View Project <span className="ml-1 text-[10px] -translate-y-1.5 transition-transform duration-1000 group-hover:-translate-y-2.5 group-hover:translate-x-1">↗</span>
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         ))}

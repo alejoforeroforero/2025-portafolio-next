@@ -11,27 +11,48 @@ export default async function Projects() {
         {projects.map((project) => (
           <div 
             key={project.id} 
-            className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-6 transition-colors"
+            className="grid grid-cols-[150px_1fr]"
           >
-            <h4 className="text-lg font-medium mb-2">{project.title}</h4>
-            <p className="text-gray-600 dark:text-gray-300 mb-3">{project.description}</p>
-            <div className="text-sm text-gray-500 dark:text-gray-400">
-              <p>
-                {new Date(project.startDate).toLocaleDateString()} - {" "}
-                {project.endDate ? new Date(project.endDate).toLocaleDateString() : "Present"}
+            {/* Left column - Date */}
+            <div className="text-sm mt-1">
+              <p style={{ color: '#b9acac' }}>
+                {new Date(project.startDate).toLocaleDateString('en-US', {
+                  month: 'short',
+                  year: 'numeric'
+                })} - {" "}
+                {project.endDate ? new Date(project.endDate).toLocaleDateString('en-US', {
+                  month: 'short',
+                  year: 'numeric'
+                }) : "Present"}
               </p>
-              <p className="mt-2">Type: {project.type}</p>
-              <p className="mt-2">Stack: {project.stack.join(", ")}</p>
-              {project.link && (
-                <a 
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sky-500 hover:text-sky-700 mt-2 inline-block"
-                >
-                  View Project
-                </a>
-              )}
+            </div>
+
+            {/* Right column - Project details */}
+            <div>
+              <h4 className="text-lg font-medium text-gray-900 dark:text-gray-100">{project.title}</h4>
+              <p className="text-gray-600 dark:text-gray-300 mt-3 mb-3">{project.description}</p>
+              <div className="text-sm text-gray-500 dark:text-gray-400">
+                <div className="flex flex-wrap gap-2">
+                  {project.stack.map((tech, index) => (
+                    <span 
+                      key={index} 
+                      className="px-2 py-1 bg-[rgb(75,85,99)] text-white rounded"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                {project.link && (
+                  <a 
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-8 inline-flex items-center text-sky-500 hover:text-sky-700 transition-colors group"
+                  >
+                    View Project <span className="ml-1 text-[10px] -translate-y-1.5 transition-transform duration-1000 group-hover:-translate-y-2.5 group-hover:translate-x-1">↗</span>
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         ))}
