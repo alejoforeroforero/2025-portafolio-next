@@ -133,14 +133,24 @@ function generateHTML(node: Node): JSX.Element | JSX.Element[] | string {
 
     case "paragraph": {
       const classes = ["editor-paragraph"];
+      
+      // Add direction classes
       if (node.direction === "ltr") classes.push("ltr");
       if (node.direction === "rtl") classes.push("rtl");
+      
+      // Add alignment classes
+      if (typeof node.format === "string") {
+        classes.push(`text-${node.format}`);
+      }
+      
+      // Add indentation
       if (node.indent) classes.push(`editor-indent-${node.indent}`);
 
       const style = node.textStyle ? { style: parseStyle(node.textStyle) } : {};
 
       return (
         <p className={classes.join(" ")} {...style}>
+          {node.children?.length === 0 && "\u00A0"}
           {node.children?.map((child, index) => (
             <React.Fragment key={index}>
               {generateHTML(child)}
@@ -184,6 +194,188 @@ function generateHTML(node: Node): JSX.Element | JSX.Element[] | string {
             className={className}
             style={style}
         />;
+    }
+
+    case "heading": {
+      const classes = [`editor-heading-${node.tag || 'h1'}`];
+      
+      // Add direction classes
+      if (node.direction === "ltr") classes.push("ltr");
+      if (node.direction === "rtl") classes.push("rtl");
+      
+      // Add alignment classes
+      if (typeof node.format === "string") {
+        classes.push(`text-${node.format}`);
+      }
+      
+      // Add indentation
+      if (node.indent) classes.push(`editor-indent-${node.indent}`);
+
+      const HeadingTag = node.tag || 'h1';
+      
+      return (
+        <HeadingTag className={classes.join(" ")}>
+          {node.children?.map((child, index) => (
+            <React.Fragment key={index}>
+              {generateHTML(child)}
+            </React.Fragment>
+          ))}
+        </HeadingTag>
+      );
+    }
+
+    case "youtube": {
+      const classes = ["youtube-embed"];
+      
+      // Add alignment classes
+      if (typeof node.format === "string") {
+        classes.push(`text-${node.format}`);
+      }
+
+      return (
+        <div className={classes.join(" ")}>
+          <iframe 
+            width="560"
+            height="315"
+            src={`https://www.youtube.com/embed/${node.videoID}`}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            title="YouTube video"
+          />
+        </div>
+      );
+    }
+
+    case "list": {
+      const classes = [];
+      
+      // Add theme classes (ul/ol specific classes)
+      if (node.listType === "bullet") classes.push("editor-list-ul");
+      if (node.listType === "number") classes.push("editor-list-ol");
+      
+      // Add alignment classes
+      if (typeof node.format === "string") {
+        classes.push(`text-${node.format}`);
+      }
+
+      const ListTag = node.listType === "bullet" ? "ul" : "ol";
+      
+      return (
+        <ListTag className={classes.join(" ")}>
+          {node.children?.map((child, index) => (
+            <React.Fragment key={index}>
+              {generateHTML(child)}
+            </React.Fragment>
+          ))}
+        </ListTag>
+      );
+    }
+
+    case "listitem": {
+      const classes = ["editor-listitem"];
+      
+      // Add direction classes
+      if (node.direction === "ltr") classes.push("ltr");
+      if (node.direction === "rtl") classes.push("rtl");
+      
+      // Add indentation
+      if (node.indent) classes.push(`editor-indent-${node.indent}`);
+      
+      // Add nested class if applicable
+      if (node.nested) classes.push("editor-nested-listitem");
+
+      return (
+        <li className={classes.join(" ")}>
+          {node.children?.length === 0 && "\u00A0"}
+          {node.children?.map((child, index) => (
+            <React.Fragment key={index}>
+              {generateHTML(child)}
+            </React.Fragment>
+          )) || "\u00A0"}
+        </li>
+      );
+    }
+
+    case "link": {
+      const classes = ["editor-link"];
+      
+      // Add alignment classes
+      if (typeof node.format === "string") {
+        classes.push(`text-${node.format}`);
+      }
+
+      return (
+        <a 
+          className={classes.join(" ")} 
+          href={node.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {node.children?.map((child, index) => (
+            <React.Fragment key={index}>
+              {generateHTML(child)}
+            </React.Fragment>
+          ))}
+        </a>
+      );
+    }
+
+    case "image": {
+      const imageStyle: React.CSSProperties = {};
+      if (node.maxWidth) {
+        imageStyle.maxWidth = `${node.maxWidth}px`;
+      }
+
+      const imageProps = {
+        src: node.src,
+        alt: node.altText,
+        style: imageStyle,
+        ...(node.width && node.width !== "inherit" ? { width: node.width } : {}),
+        ...(node.height && node.height !== "inherit" ? { height: node.height } : {})
+      };
+
+      const imageElement = <img {...imageProps} />;
+
+      // If there's a caption and showCaption is true, wrap in figure
+      if (node.showCaption && node.caption) {
+        return (
+          <span className="editor-image">
+            <figure>
+              {imageElement}
+              <figcaption>
+                {generateHTML(node.caption as unknown as Node)}
+              </figcaption>
+            </figure>
+          </span>
+        );
+      }
+
+      // Just wrap in span to maintain inline-block without breaking paragraph
+      return (
+        <span className="editor-image">
+          {imageElement}
+        </span>
+      );
+    }
+
+    case "quote": {
+      const classes = ["editor-quote"];
+      
+      // Add alignment classes
+      if (typeof node.format === "string") {
+        classes.push(`text-${node.format}`);
+      }
+
+      return (
+        <blockquote className={classes.join(" ")}>
+          {node.children?.map((child, index) => (
+            <React.Fragment key={index}>
+              {generateHTML(child)}
+            </React.Fragment>
+          ))}
+        </blockquote>
+      );
     }
 
     default:
