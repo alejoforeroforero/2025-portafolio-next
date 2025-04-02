@@ -4,7 +4,7 @@ services:
     container_name: portafolio-db # Cambiar el nombre del contenedor
     restart: always
     ports:
-      - 5435:5432    # Escoger el puerto adecuado, por ejemplo de 5432:5432 a 5433:5432
+      - 5438:5432    # Escoger el puerto adecuado, por ejemplo de 5432:5432 a 5433:5432
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres

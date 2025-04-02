@@ -1,6 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { compare } from "bcrypt";
+import bcrypt from "bcrypt";
 import prisma from "@/lib/prisma";
 
 export const authOptions: NextAuthOptions = {
@@ -31,11 +31,16 @@ export const authOptions: NextAuthOptions = {
             return null;
           }
 
-          const isPasswordValid = await compare(credentials.password, user.password);
-          console.log("Contraseña válida:", isPasswordValid);
+          try {
+            const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
+            console.log("Contraseña válida:", isPasswordValid);
 
-          if (!isPasswordValid) {
-            console.log("Contraseña inválida");
+            if (!isPasswordValid) {
+              console.log("Contraseña inválida");
+              return null;
+            }
+          } catch (bcryptError) {
+            console.error("Error en bcrypt.compare:", bcryptError);
             return null;
           }
 
@@ -51,12 +56,12 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: '/auth/signin', // This path is correct according to your file structure
+    signIn: '/auth/signin',
   },
   session: {
     strategy: "jwt",
   },
-  debug: false, // Change this to false in production
+  debug: true, // Temporarily set to true to see more details
 };
 
 const handler = NextAuth(authOptions);
