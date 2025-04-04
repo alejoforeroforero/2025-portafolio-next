@@ -1,5 +1,5 @@
 services:
-  frasesDB:
+  portafolioDB:
     image: postgres:15.3
     container_name: portafolio-db # Cambiar el nombre del contenedor
     restart: always
