@@ -4,7 +4,7 @@ import Experience from "@/components/website/Experience";
 import Projects from "@/components/website/Projects";
 import Header from "@/components/website/Header";
 
-import '@/text-editor/styles/Editor.css';
+
 
 export default function Home() {
   return (

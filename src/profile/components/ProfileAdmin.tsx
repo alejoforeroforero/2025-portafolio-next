@@ -1,176 +1,184 @@
 "use client";
 
-import { User } from "@prisma/client";
-import { UpdateUser } from "../actions/user-actions";
-import { useState } from "react";
-import { TextEditor } from "@/text-editor/TextEditor";
-// import { convertToHTML } from "@/text-editor/utils/convertToHtml";
-import { showEditorContent } from "@/text-editor/react-components/showEditorContent";
+import { useState, useEffect } from "react";
+import { CreateProfile, GetProfile, UpdateProfile } from "../actions/profile-actions";
+import { Profile } from "@prisma/client";
+import toast from 'react-hot-toast';
 
-interface Props {
-  initialUser: User;
+interface ProfileFormData {
+  id?: string;
+  name: string;
+  title: string;
+  tagline: string;
+  bio: string;
 }
 
-const EditorContent = ({ content }: { content: string }) => {
-  if (!content) return null;
-  return showEditorContent(content);
-};
+export const ProfileAdmin = () => {
+  const [formData, setFormData] = useState<ProfileFormData>({
+    name: "",
+    title: "",
+    tagline: "",
+    bio: "",
+  });
+  const [loading, setLoading] = useState(false);
 
-export const ProfileAdmin = ({ initialUser }: Props) => {
-  const [editForm, setEditForm] = useState<Partial<User>>(initialUser);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editorContent, setEditorContent] = useState(initialUser.text || "");
+  useEffect(() => {
+    const loadProfile = async () => {
+      const loadingToast = toast.loading('Loading profile...');
+      try {
+        const profile = await GetProfile();
+        if (profile) {
+          setFormData(profile);
+          toast.success('Profile loaded successfully', {
+            id: loadingToast,
+          });
+        }
+      } catch (error) {
+        toast.error('Failed to load profile', {
+          id: loadingToast,
+        });
+        console.log(error)
+      }
+    };
+    loadProfile();
+  }, []);
 
-  const handleUpdate = async () => {
-    if (!editForm.name || !editForm.profile) return;
-
-    const updatedUser = await UpdateUser({
-      ...initialUser,
-      name: editForm.name,
-      profile: editForm.profile,
-      occupation: editForm.occupation || null,
-      text: editorContent,
-    });
-
-    // Update local state with the new values
-    setEditForm(updatedUser);
-    setEditorContent(updatedUser.text || "");
-    setIsEditing(false);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleUpdate();
-    }
-    if (e.key === "Escape") {
-      setIsEditing(false);
-      setEditForm(initialUser);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    
+    const saveToast = toast.loading('Saving changes...');
+    
+    try {
+      if (formData.id) {
+        await UpdateProfile(formData as Profile);
+        toast.success('Profile updated successfully', {
+          id: saveToast,
+          duration: 3000,
+          icon: '👍',
+        });
+      } else {
+        await CreateProfile(formData);
+        toast.success('Profile created successfully', {
+          id: saveToast,
+          duration: 3000,
+          icon: '✨',
+        });
+      }
+    } catch (error) {
+      toast.error('Error saving profile', {
+        id: saveToast,
+        duration: 4000,
+      });
+      console.error('Error saving profile:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="w-full mt-8 max-w-[1100px] mx-auto p-6">
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
-            Profile Details
-          </h2>
-          {!isEditing && (
-            <button
-              onClick={() => setIsEditing(true)}
-              className="text-sky-500 hover:text-sky-700 transition-colors"
-            >
-              Edit
-            </button>
-          )}
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+          Profile Management
+        </h2>
+        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+          Update your profile information
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label 
+            htmlFor="name" 
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+          >
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 dark:text-gray-100 dark:border-gray-700 dark:bg-gray-800 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            required
+          />
         </div>
 
-        {isEditing ? (
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
-                Nombre
-              </label>
-              <input
-                type="text"
-                value={editForm.name || ""}
-                onChange={(e) =>
-                  setEditForm({ ...editForm, name: e.target.value })
-                }
-                onKeyDown={handleKeyPress}
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 dark:bg-gray-700"
-              />
-            </div>
+        <div>
+          <label 
+            htmlFor="title" 
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+          >
+            Title
+          </label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value={formData.title}
+            onChange={handleInputChange}
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 dark:text-gray-100 dark:border-gray-700 dark:bg-gray-800 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            required
+          />
+        </div>
 
-            <div>
-              <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
-                Ocupación
-              </label>
-              <input
-                type="text"
-                value={editForm.occupation || ""}
-                onChange={(e) =>
-                  setEditForm({ ...editForm, occupation: e.target.value })
-                }
-                onKeyDown={handleKeyPress}
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 dark:bg-gray-700"
-              />
-            </div>
+        <div>
+          <label 
+            htmlFor="tagline" 
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+          >
+            Tagline
+          </label>
+          <input
+            type="text"
+            id="tagline"
+            name="tagline"
+            value={formData.tagline}
+            onChange={handleInputChange}
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 dark:text-gray-100 dark:border-gray-700 dark:bg-gray-800 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            required
+          />
+        </div>
 
-            <div>
-              <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
-                Perfil
-              </label>
-              <textarea
-                value={editForm.profile || ""}
-                onChange={(e) =>
-                  setEditForm({ ...editForm, profile: e.target.value })
-                }
-                onKeyDown={handleKeyPress}
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-sky-500 dark:bg-gray-700"
-                rows={3}
-              />
-            </div>
+        <div>
+          <label 
+            htmlFor="bio" 
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+          >
+            Bio
+          </label>
+          <textarea
+            id="bio"
+            name="bio"
+            value={formData.bio}
+            onChange={handleInputChange}
+            rows={6}
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 dark:text-gray-100 dark:border-gray-700 dark:bg-gray-800 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            required
+          />
+        </div>
 
-            <div>
-              <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
-                Texto
-              </label>
-              <TextEditor
-                initialContent={editForm.text}
-                onChange={(content) => setEditorContent(content)}
-              />
-            </div>
-
-            <div className="flex justify-end gap-2 mt-4">
-              <button
-                onClick={() => {
-                  setIsEditing(false);
-                  setEditForm(initialUser);
-                }}
-                className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
-              >
-                Cancelar
-              </button>
-              <button
-                onClick={handleUpdate}
-                className="px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors"
-              >
-                Guardar
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                {editForm.name}
-              </h3>
-              {editForm.occupation && (
-                <p className="text-gray-600 dark:text-gray-400">
-                  {editForm.occupation}
-                </p>
-              )}
-            </div>
-            <div>
-              <p className="text-blue-500 dark:text-gray-300 whitespace-pre-wrap">
-                {editForm.profile}
-              </p>
-            </div>
-            {/* <div>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: convertToHTML(editorContent),
-                }}
-              />
-            </div> */}
-            <div>
-              <EditorContent content={editorContent} />
-            </div>
-          </div>
-        )}
-      </div>
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            disabled={loading}
+            className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? 'Saving...' : 'Save Profile'}
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

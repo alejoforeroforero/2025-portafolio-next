@@ -1,24 +1,39 @@
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
-import prisma from "@/lib/prisma";
-import AdminPage from "./AdminPage";
+"use client";
 
-export default async function AdminPageLayout() {
-  const session = await getServerSession();
-  
-  if (!session) {
-    redirect("/auth/signin");
-  }
+import { useState } from "react";
+import { ProfileAdmin } from "@/profile";
+import { ExperienceAdmin } from "@/experience";
+import { ProjectAdmin } from "@/projects";
+import { Tabs } from "@/components/Tabs";
 
-  const user = await prisma.user.findUnique({
-    where: { 
-      email: session.user?.email || redirect('/auth/signin')
-    }
-  });
+export default function AdminPage() {
+  const [activeTab, setActiveTab] = useState("profile");
 
-  if (!user) {
-    redirect("/auth/signin");
-  }
+  const tabs = [
+    { id: "profile", label: "Profile" },
+    { id: "experience", label: "Experience" },
+    { id: "projects", label: "Projects" },
+  ];
 
-  return <AdminPage initialUser={user} />;
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+          Admin Dashboard
+        </h1>
+      </div>
+
+      <Tabs
+        tabs={tabs}
+        activeTab={activeTab}
+        onTabChange={(tabId) => setActiveTab(tabId)}
+      />
+
+      <div className="mt-6">
+        {activeTab === "profile" && <ProfileAdmin />}
+        {activeTab === "experience" && <ExperienceAdmin />}
+        {activeTab === "projects" && <ProjectAdmin />}
+      </div>
+    </div>
+  );
 }

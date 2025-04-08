@@ -9,14 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^2.8.0",
     "@lexical/react": "^0.28.0",
-    "@prisma/client": "^6.5.0",
+    "@prisma/client": "^6.6.0",
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "lexical": "^0.28.0",
     "next": "15.2.3",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hot-toast": "^2.5.2",
     "yup": "^1.6.1"
   },
   "devDependencies": {
