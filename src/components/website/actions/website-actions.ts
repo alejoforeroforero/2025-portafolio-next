@@ -4,14 +4,6 @@
 import prisma from "@/lib/prisma";
 
 export async function getWebsiteUser() {
-
-}
-
-export async function getWebsiteExperiences() {
-
-}
-
-export async function getWebsiteProjects() {
-
+  return await prisma.profile.findFirst();
 }
 

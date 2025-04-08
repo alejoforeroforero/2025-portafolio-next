@@ -1,15 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 export const Menu = () => {
   const [selected, setSelected] = useState("about");
 
-  const menuItems = [
+  const menuItems = useMemo(() => [
     { id: "about", label: "About" },
     { id: "experience", label: "Experience" },
     { id: "projects", label: "Projects" },
-  ];
+  ], []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,11 +31,10 @@ export const Menu = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    // Initial check
     handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [menuItems]);
 
   const handleClick = (id: string) => {
     setSelected(id);

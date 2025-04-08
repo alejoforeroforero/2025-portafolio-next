@@ -80,3 +80,36 @@ model Profile {
   @@map("profiles")
 }
 
+model Experience {
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  link        String
+  startDate   DateTime
+  endDate     DateTime?
+  position    Int
+  stack       String[]
+  img         String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("experiences")
+}
+
+model Project {
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  link        String
+  startDate   DateTime
+  endDate     DateTime?
+  position    Int
+  stack       String[]
+  img         String?
+  type        String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("projects")
+}
+
