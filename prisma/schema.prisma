@@ -106,7 +106,7 @@ model Project {
   position    Int
   stack       String[]
   img         String?
-  type        String
+  type        String?   // Adding back the type field
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 

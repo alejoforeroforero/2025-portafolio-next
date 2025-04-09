@@ -15,7 +15,7 @@ export const CreateProject = async (data: Omit<Project, "id" | "createdAt" | "up
       position: data.position,
       stack: data.stack,
       img: data.img,
-      type: data.type,
+      type: data.type, // Ensure type is included
     },
   });
 
@@ -45,7 +45,7 @@ export const UpdateProject = async (data: Project) => {
       position: data.position,
       stack: data.stack,
       img: data.img,
-      type: data.type,
+      type: data.type, // Add type field here
     },
   });
 
