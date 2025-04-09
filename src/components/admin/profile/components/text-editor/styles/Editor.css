@@ -57,7 +57,7 @@ pre::-webkit-scrollbar-thumb {
 
 .editor-inner {
   border:1px solid #ccc;
-  background: #fff;
+  background: #222;
   position: relative;
   width: 100%; /* Aseguramos que ocupe todo el ancho del contenedor */
   min-width: 100%;

@@ -1,11 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { CreateProfile, GetProfile, UpdateProfile } from "../../../actions/profile-actions";
+import {
+  CreateProfile,
+  GetProfile,
+  UpdateProfile,
+} from "../../../actions/profile-actions";
 import { Profile } from "@prisma/client";
-import toast from 'react-hot-toast';
-// import { BioEditor } from '@/components/admin/profile/components/text-editor/BioEditor';
-import { TextEditor } from '@/components/admin/profile/components/text-editor/TextEditor';
+import toast from "react-hot-toast";
+import { TextEditor } from "@/components/admin/profile/components/text-editor/TextEditor";
 
 interface ProfileFormData {
   id?: string;
@@ -32,49 +35,50 @@ export const ProfileAdmin = () => {
           setFormData(profile);
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     };
     loadProfile();
   }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
-
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    
-    const saveToast = toast.loading('Saving changes...');
-    
+
+    const saveToast = toast.loading("Saving changes...");
+
     try {
       if (formData.id) {
         await UpdateProfile(formData as Profile);
-        toast.success('Profile updated successfully', {
+        toast.success("Profile updated successfully", {
           id: saveToast,
           duration: 3000,
-          icon: '👍',
+          icon: "👍",
         });
       } else {
         await CreateProfile(formData);
-        toast.success('Profile created successfully', {
+        toast.success("Profile created successfully", {
           id: saveToast,
           duration: 3000,
-          icon: '✨',
+          icon: "✨",
         });
       }
     } catch (error) {
-      toast.error('Error saving profile', {
+      toast.error("Error saving profile", {
         id: saveToast,
         duration: 4000,
       });
-      console.error('Error saving profile:', error);
+      console.error("Error saving profile:", error);
     } finally {
       setLoading(false);
     }
@@ -93,8 +97,8 @@ export const ProfileAdmin = () => {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label 
-            htmlFor="name" 
+          <label
+            htmlFor="name"
             className="block text-sm font-medium text-gray-700 dark:text-gray-300"
           >
             Name
@@ -111,8 +115,8 @@ export const ProfileAdmin = () => {
         </div>
 
         <div>
-          <label 
-            htmlFor="title" 
+          <label
+            htmlFor="title"
             className="block text-sm font-medium text-gray-700 dark:text-gray-300"
           >
             Title
@@ -129,8 +133,8 @@ export const ProfileAdmin = () => {
         </div>
 
         <div>
-          <label 
-            htmlFor="tagline" 
+          <label
+            htmlFor="tagline"
             className="block text-sm font-medium text-gray-700 dark:text-gray-300"
           >
             Tagline
@@ -146,30 +150,29 @@ export const ProfileAdmin = () => {
           />
         </div>
 
-        <div>
-          <label 
-            htmlFor="bio" 
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-          >
-            Bio
-          </label>
-          {/* <BioEditor
-            onChange={(html) => setFormData(prev => ({ ...prev, bio: html }))}
-            initialContent={formData.bio}
-          /> */}
-          <TextEditor />
-        </div>
-
         <div className="flex justify-end">
           <button
             type="submit"
             disabled={loading}
             className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Saving...' : 'Save Profile'}
+            {loading ? "Saving..." : "Save Profile"}
           </button>
         </div>
       </form>
+      <div className="my-8 h-px bg-gray-200 dark:bg-gray-700" />
+      <div>
+        <label
+          htmlFor="bio"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+        >
+          Bio
+        </label>
+
+        <TextEditor 
+          initialContent={formData.bio}
+        />
+      </div>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { ToolbarProvider } from './context/ToolbarContext'
 
 //Lexical Plugins
+import ToolbarPlugin from './ToolbarPlugin'
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
@@ -11,9 +12,9 @@ import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary'
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 
-import ToolbarPlugin from './ToolbarPlugin'
-
 import { editorNodes } from './nodes/LexicalNodes/LexicalNodes'
+
+import { PreviewButton } from './ui/PreviewButton'
 
 import TextEditorTheme from './TextEditorTheme'
 
@@ -83,9 +84,9 @@ export const TextEditor = ({ initialContent, onChange }: TextEditorProps) => {
                       className='editor-input'
                       aria-placeholder={placeholder}
                       placeholder={<div className='editor-placeholder'>{placeholder}</div>}
-                    />
-                   
+                    />                   
                   </div>
+                  <PreviewButton />
                 </div>
               }
               ErrorBoundary={LexicalErrorBoundary}

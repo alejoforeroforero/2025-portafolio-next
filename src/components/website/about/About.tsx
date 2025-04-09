@@ -1,4 +1,8 @@
+import { getWebsiteUser } from "@/components/website/actions/website-actions";
+import { convertToHTMLDynamic } from "@/components/admin/profile/components/text-editor/utils/convertToHTMLDynamic";
+
 export default async function About() {
+  const profile = await getWebsiteUser();
  
   return (
     <div className="max-w-4xl p-[60px]">
@@ -7,7 +11,7 @@ export default async function About() {
       </h1>
 
       <div className="prose dark:prose-invert">
-       
+        {profile?.bio && convertToHTMLDynamic(profile.bio)}
       </div>
     </div>
   );
