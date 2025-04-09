@@ -1,6 +1,4 @@
-"use client";
-
-import { Project } from "@prisma/client";
+import type { Project } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { projectSchema } from "../schemas/project-schema";
 import { DeleteProject, GetProjects, UpdateProject, CreateProject } from "../actions/project-actions";

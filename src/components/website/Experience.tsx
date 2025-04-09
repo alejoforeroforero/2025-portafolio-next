@@ -1,9 +1,54 @@
 
+'use client';
 
+import type { Experience } from "@prisma/client";
+import { useEffect, useState } from "react";
 import { GetExperiences } from "@/experience/actions/experience-actions";
+import toast from 'react-hot-toast';
 
-export default async function Experience() {
-  const experiences = await GetExperiences();
+export default function Experience() {
+  const [experiences, setExperiences] = useState<Experience[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadExperiences();
+  }, []);
+
+  const loadExperiences = async () => {
+    const loadingToast = toast.loading('Loading experiences...');
+    try {
+      const data = await GetExperiences();
+      setExperiences(data);
+      toast.success('Experiences loaded successfully', { id: loadingToast });
+    } catch (error) {
+      toast.error('Failed to load experiences', { id: loadingToast });
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="max-w-4xl p-[60px]">
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-700 rounded w-1/4 mb-8"></div>
+          <div className="space-y-12">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="border-l-2 border-gray-700 pl-8 relative">
+                <div className="absolute w-4 h-4 bg-gray-700 rounded-full -left-[9px] top-0" />
+                <div className="space-y-4">
+                  <div className="h-6 bg-gray-700 rounded w-3/4"></div>
+                  <div className="h-4 bg-gray-700 rounded w-1/4"></div>
+                  <div className="h-20 bg-gray-700 rounded w-full"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl p-[60px]">
@@ -14,7 +59,6 @@ export default async function Experience() {
       <div className="space-y-12">
         {experiences.map((experience) => (
           <div key={experience.id} className="border-l-2 border-gray-700 pl-8 relative">
-            {/* Timeline dot */}
             <div className="absolute w-4 h-4 bg-gray-700 rounded-full -left-[9px] top-0" />
             
             <div className="space-y-4">
