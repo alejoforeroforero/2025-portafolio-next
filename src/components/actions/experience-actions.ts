@@ -20,6 +20,7 @@ export const CreateExperience = async (data: Omit<Experience, "id" | "createdAt"
   });
 
   revalidatePath("/admin");
+  revalidatePath("/");
   return experience;
 };
 
@@ -49,6 +50,7 @@ export const UpdateExperience = async (data: Experience) => {
   });
 
   revalidatePath("/admin");
+  revalidatePath("/");
   return experience;
 };
 
@@ -58,5 +60,6 @@ export const DeleteExperience = async (id: string) => {
   });
 
   revalidatePath("/admin");
+  revalidatePath("/");
 };
 

@@ -1,7 +1,7 @@
 import type { Project } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { projectSchema } from "../schemas/project-schema";
-import { DeleteProject, GetProjects, UpdateProject, CreateProject } from "../actions/project-actions";
+import { DeleteProject, GetProjects, UpdateProject, CreateProject } from "../../../actions/project-actions";
 import * as yup from "yup";
 import toast from 'react-hot-toast';
 import { ProjectForm } from "./ProjectForm";
@@ -21,13 +21,10 @@ export const ProjectAdmin = () => {
   }, []);
 
   const loadProjects = async () => {
-    const loadingToast = toast.loading('Loading projects...');
     try {
       const data = await GetProjects();
       setProjects(data);
-      toast.success('Projects loaded successfully', { id: loadingToast });
     } catch (error) {
-      toast.error('Failed to load projects', { id: loadingToast });
       console.error(error);
     }
   };

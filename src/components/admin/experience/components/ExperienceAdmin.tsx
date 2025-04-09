@@ -4,7 +4,7 @@
 import { Experience } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { experienceSchema } from "../schemas/experience-schema";
-import { DeleteExperience, GetExperiences, UpdateExperience, CreateExperience } from "../actions/experience-actions";
+import { DeleteExperience, GetExperiences, UpdateExperience, CreateExperience } from "../../../actions/experience-actions";
 import * as yup from "yup";
 import toast from 'react-hot-toast';
 import { ExperienceForm } from "./ExperienceForm";
@@ -25,13 +25,10 @@ export const ExperienceAdmin = () => {
   }, []);
 
   const loadExperiences = async () => {
-    const loadingToast = toast.loading('Loading experiences...');
     try {
       const data = await GetExperiences();
       setExperiences(data);
-      toast.success('Experiences loaded successfully', { id: loadingToast });
     } catch (error) {
-      toast.error('Failed to load experiences', { id: loadingToast });
       console.error(error);
     }
   };

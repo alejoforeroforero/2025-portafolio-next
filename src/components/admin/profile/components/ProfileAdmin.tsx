@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { CreateProfile, GetProfile, UpdateProfile } from "../actions/profile-actions";
+import { CreateProfile, GetProfile, UpdateProfile } from "../../../actions/profile-actions";
 import { Profile } from "@prisma/client";
 import toast from 'react-hot-toast';
 import { BioEditor } from '@/components/admin/profile/components/BioEditor';
@@ -25,19 +25,12 @@ export const ProfileAdmin = () => {
 
   useEffect(() => {
     const loadProfile = async () => {
-      const loadingToast = toast.loading('Loading profile...');
       try {
         const profile = await GetProfile();
         if (profile) {
           setFormData(profile);
-          toast.success('Profile loaded successfully', {
-            id: loadingToast,
-          });
         }
       } catch (error) {
-        toast.error('Failed to load profile', {
-          id: loadingToast,
-        });
         console.log(error)
       }
     };

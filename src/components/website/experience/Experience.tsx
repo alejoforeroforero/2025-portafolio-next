@@ -3,7 +3,7 @@
 
 import type { Experience } from "@prisma/client";
 import { useEffect, useState } from "react";
-import { GetExperiences } from "@/components/admin/experience/actions/experience-actions";
+import { GetExperiences } from "@/components/actions/experience-actions";
 import toast from 'react-hot-toast';
 
 export default function Experience() {
