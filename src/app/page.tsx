@@ -1,10 +1,8 @@
 import { Menu } from "@/components/website/Menu";
-import About from "@/components/website/About";
-import Experience from "@/components/website/Experience";
-import Projects from "@/components/website/Projects";
+import About from "@/components/website/about/About";
+import Experience from "@/components/website/experience/Experience";
+import Projects from "@/components/website/projects/Projects";
 import Header from "@/components/website/Header";
-
-
 
 export default function Home() {
   return (

@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { ProfileAdmin } from "@/profile";
-import { ExperienceAdmin } from "@/experience";
-import { ProjectAdmin } from "@/projects";
-import { Tabs } from "@/components/Tabs";
+import { ProfileAdmin } from "@/components/admin/profile";
+import { ExperienceAdmin } from "@/components/admin/experience";
+import { ProjectAdmin } from "@/components/admin/projects";
+import { Tabs } from "@/components/ui/Tabs";
 
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState("profile");

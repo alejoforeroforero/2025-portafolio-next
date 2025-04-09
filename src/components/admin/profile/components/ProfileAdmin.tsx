@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { CreateProfile, GetProfile, UpdateProfile } from "../actions/profile-actions";
 import { Profile } from "@prisma/client";
 import toast from 'react-hot-toast';
-import { BioEditor } from '@/components/BioEditor';
+import { BioEditor } from '@/components/admin/profile/components/BioEditor';
 
 interface ProfileFormData {
   id?: string;
