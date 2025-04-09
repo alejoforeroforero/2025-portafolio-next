@@ -288,72 +288,212 @@ export const ExperienceAdmin = () => {
       <div className="space-y-6">
         {experiences.map((experience) => (
           <div key={experience.id} className="p-6 bg-gray-800 rounded-lg">
-            <div className="flex justify-between items-start">
-              <div className="space-y-4 w-full">
+            {editingId === experience.id ? (
+              // Edit Form
+              <div className="space-y-4">
                 <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-100">{experience.title}</h3>
-                    <p className="text-gray-400 mt-1">
-                      {new Date(experience.startDate).toLocaleDateString()} - {' '}
-                      {experience.endDate ? new Date(experience.endDate).toLocaleDateString() : 'Present'}
-                    </p>
-                  </div>
+                  <h3 className="text-xl font-semibold text-gray-100">Edit Experience</h3>
                   <div className="flex gap-2">
                     <button
-                      onClick={() => handleEdit(experience)}
-                      className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                      onClick={() => handleUpdate(experience.id)}
+                      className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
                     >
-                      Edit
+                      Save
                     </button>
                     <button
-                      onClick={() => handleDelete(experience.id)}
-                      className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+                      onClick={() => {
+                        setEditingId(null);
+                        setEditForm({});
+                        setErrors({});
+                      }}
+                      className="px-3 py-1 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
                     >
-                      Delete
+                      Cancel
                     </button>
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <p className="text-gray-400">{experience.description}</p>
-                  
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="text-gray-300">Position:</span>
-                    <span className="text-gray-400">{experience.position}</span>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300">Title</label>
+                    <input
+                      type="text"
+                      value={editForm.title || ''}
+                      onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+                      className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-100"
+                    />
+                    {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>}
                   </div>
 
-                  <div className="flex items-center gap-2 text-sm">
-                    <span className="text-gray-300">Link:</span>
-                    <a 
-                      href={experience.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-400 hover:text-blue-300 transition-colors"
-                    >
-                      {experience.link}
-                    </a>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300">Description</label>
+                    <textarea
+                      value={editForm.description || ''}
+                      onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
+                      className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-100"
+                      rows={3}
+                    />
+                    {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description}</p>}
                   </div>
 
-                  {experience.img && (
-                    <div className="flex items-center gap-2 text-sm">
-                      <span className="text-gray-300">Image URL:</span>
-                      <span className="text-gray-400">{experience.img}</span>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300">Link</label>
+                    <input
+                      type="url"
+                      value={editForm.link || ''}
+                      onChange={(e) => setEditForm({ ...editForm, link: e.target.value })}
+                      className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-100"
+                    />
+                    {errors.link && <p className="text-red-500 text-sm mt-1">{errors.link}</p>}
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300">Start Date</label>
+                      <input
+                        type="date"
+                        value={editForm.startDate ? new Date(editForm.startDate).toISOString().split('T')[0] : ''}
+                        onChange={(e) => setEditForm({ ...editForm, startDate: new Date(e.target.value) })}
+                        className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-100"
+                      />
+                      {errors.startDate && <p className="text-red-500 text-sm mt-1">{errors.startDate}</p>}
                     </div>
-                  )}
 
-                  <div className="flex flex-wrap gap-2 mt-3">
-                    {experience.stack.map((tech, index) => (
-                      <span 
-                        key={index} 
-                        className="px-2 py-1 bg-gray-700 text-gray-300 rounded-full text-sm"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300">End Date</label>
+                      <div className="space-y-2">
+                        <input
+                          type="date"
+                          value={editForm.endDate && !isCurrentEdit ? new Date(editForm.endDate).toISOString().split('T')[0] : ''}
+                          onChange={(e) => setEditForm({ ...editForm, endDate: new Date(e.target.value) })}
+                          className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-100"
+                          disabled={isCurrentEdit}
+                        />
+                        <div className="flex items-center">
+                          <input
+                            type="checkbox"
+                            id={`currentPosition-${experience.id}`}
+                            checked={isCurrentEdit}
+                            onChange={(e) => {
+                              setIsCurrentEdit(e.target.checked);
+                              if (e.target.checked) {
+                                setEditForm({ ...editForm, endDate: null });
+                              }
+                            }}
+                            className="w-4 h-4 rounded bg-gray-700 border-gray-600 text-blue-500 focus:ring-blue-500"
+                          />
+                          <label htmlFor={`currentPosition-${experience.id}`} className="ml-2 text-sm text-gray-300">
+                            Current Position
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300">Position</label>
+                    <input
+                      type="number"
+                      value={editForm.position || ''}
+                      onChange={(e) => setEditForm({ ...editForm, position: parseInt(e.target.value) })}
+                      className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-100"
+                      min="0"
+                    />
+                    {errors.position && <p className="text-red-500 text-sm mt-1">{errors.position}</p>}
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300">Technologies (comma-separated)</label>
+                    <input
+                      type="text"
+                      value={editForm.stack?.join(', ') || ''}
+                      onChange={(e) => setEditForm({ ...editForm, stack: e.target.value.split(',').map(t => t.trim()) })}
+                      className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-100"
+                      placeholder="React, TypeScript, Node.js"
+                    />
+                    {errors.stack && <p className="text-red-500 text-sm mt-1">{errors.stack}</p>}
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300">Image URL (optional)</label>
+                    <input
+                      type="url"
+                      value={editForm.img || ''}
+                      onChange={(e) => setEditForm({ ...editForm, img: e.target.value })}
+                      className="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-100"
+                    />
                   </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              // Display Mode
+              <div className="flex justify-between items-start">
+                <div className="space-y-4 w-full">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-100">{experience.title}</h3>
+                      <p className="text-gray-400 mt-1">
+                        {new Date(experience.startDate).toLocaleDateString()} - {' '}
+                        {experience.endDate ? new Date(experience.endDate).toLocaleDateString() : 'Present'}
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleEdit(experience)}
+                        className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(experience.id)}
+                        className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <p className="text-gray-400">{experience.description}</p>
+                    
+                    <div className="flex items-center gap-2 text-sm">
+                      <span className="text-gray-300">Position:</span>
+                      <span className="text-gray-400">{experience.position}</span>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-sm">
+                      <span className="text-gray-300">Link:</span>
+                      <a 
+                        href={experience.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-400 hover:text-blue-300 transition-colors"
+                      >
+                        {experience.link}
+                      </a>
+                    </div>
+
+                    {experience.img && (
+                      <div className="flex items-center gap-2 text-sm">
+                        <span className="text-gray-300">Image URL:</span>
+                        <span className="text-gray-400">{experience.img}</span>
+                      </div>
+                    )}
+
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {experience.stack.map((tech, index) => (
+                        <span 
+                          key={index} 
+                          className="px-2 py-1 bg-gray-700 text-gray-300 rounded-full text-sm"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>
