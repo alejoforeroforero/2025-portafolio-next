@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { CreateProfile, GetProfile, UpdateProfile } from "../../../actions/profile-actions";
 import { Profile } from "@prisma/client";
 import toast from 'react-hot-toast';
-import { BioEditor } from '@/components/admin/profile/components/BioEditor';
+// import { BioEditor } from '@/components/admin/profile/components/text-editor/BioEditor';
+import { TextEditor } from '@/components/admin/profile/components/text-editor/TextEditor';
 
 interface ProfileFormData {
   id?: string;
@@ -152,10 +153,11 @@ export const ProfileAdmin = () => {
           >
             Bio
           </label>
-          <BioEditor
+          {/* <BioEditor
             onChange={(html) => setFormData(prev => ({ ...prev, bio: html }))}
             initialContent={formData.bio}
-          />
+          /> */}
+          <TextEditor />
         </div>
 
         <div className="flex justify-end">
