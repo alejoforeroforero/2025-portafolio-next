@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { CreateProfile, GetProfile, UpdateProfile } from "../actions/profile-actions";
 import { Profile } from "@prisma/client";
 import toast from 'react-hot-toast';
+import { BioEditor } from '@/components/BioEditor';
 
 interface ProfileFormData {
   id?: string;
@@ -158,14 +159,9 @@ export const ProfileAdmin = () => {
           >
             Bio
           </label>
-          <textarea
-            id="bio"
-            name="bio"
-            value={formData.bio}
-            onChange={handleInputChange}
-            rows={6}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 dark:text-gray-100 dark:border-gray-700 dark:bg-gray-800 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            required
+          <BioEditor
+            onChange={(html) => setFormData(prev => ({ ...prev, bio: html }))}
+            initialContent={formData.bio}
           />
         </div>
 
