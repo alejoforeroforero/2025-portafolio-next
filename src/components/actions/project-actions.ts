@@ -33,6 +33,32 @@ export const GetProjects = async () => {
   return projects;
 };
 
+export const GetProjectsRoot = async () => {
+  const projects = await prisma.project.findMany({
+    where: {
+      type: 'root'
+    },
+    orderBy: {
+      position: 'desc',
+    },
+  });
+
+  return projects;
+};
+
+export const GetProjectsNetArt = async () => {
+  const projects = await prisma.project.findMany({
+    where: {
+      type: 'art'
+    },
+    orderBy: {
+      position: 'desc',
+    },
+  });
+
+  return projects;
+};
+
 export const UpdateProject = async (data: Project) => {
   const project = await prisma.project.update({
     where: { id: data.id },

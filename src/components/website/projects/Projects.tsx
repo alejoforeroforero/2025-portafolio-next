@@ -4,7 +4,7 @@
 
 import type { Project } from "@prisma/client";
 import { useEffect, useState } from "react";
-import { GetProjects } from "@/components/actions/project-actions";
+import { GetProjectsRoot } from "@/components/actions/project-actions";
 import toast from "react-hot-toast";
 
 export default function Projects() {
@@ -18,7 +18,7 @@ export default function Projects() {
   const loadProjects = async () => {
     const loadingToast = toast.loading("Loading projects...");
     try {
-      const data = await GetProjects();
+      const data = await GetProjectsRoot();
       setProjects(data);
       toast.success("Projects loaded successfully", { id: loadingToast });
     } catch (error) {
