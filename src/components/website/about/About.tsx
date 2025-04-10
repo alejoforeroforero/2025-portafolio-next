@@ -29,9 +29,6 @@ export default function About() {
   if (loading) {
     return (
       <div className="max-w-4xl p-[60px]">
-        <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-gray-100">
-          About
-        </h1>
         <div className="animate-pulse">
           <div className="h-4 bg-gray-700 rounded w-3/4 mb-4"></div>
           <div className="h-4 bg-gray-700 rounded w-1/2 mb-4"></div>
@@ -42,10 +39,7 @@ export default function About() {
   }
 
   return (
-    <div className="max-w-4xl p-[60px]">
-      <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-gray-100">
-        About
-      </h1>
+    <div className="max-w-4xl pt-20 p-8">
       <div className="prose dark:prose-invert">
         {profile?.bio && convertToHTMLDynamic(profile.bio)}
       </div>

@@ -31,38 +31,20 @@ export default function Projects() {
 
   if (loading) {
     return (
-      <div className="max-w-4xl p-[60px]">
-        <div className="animate-pulse">
-          <div className="h-8 bg-gray-700 rounded w-1/4 mb-8"></div>
-          <div className="space-y-12">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="flex">
-                <div className="w-1/4 flex flex-col mr-6">
-                  <div className="h-4 bg-gray-700 rounded w-full mb-2"></div>
-                  <div className="h-12 bg-gray-700 rounded w-[90%]"></div>
-                </div>
-                <div className="flex-1 space-y-4">
-                  <div className="h-6 bg-gray-700 rounded w-3/4"></div>
-                  <div className="h-20 bg-gray-700 rounded w-full"></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+      <div className="max-w-4xl p-2 text-black-200-100">
+        
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl p-[60px]">
-      <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-gray-100">
-        Projects
-      </h1>
+    <div className="max-w-4xl">
+
       <div className="space-y-12">
         {projects.map((project) => (
           <div
             key={project.id}
-            className="group text-white p-6 rounded-xl shadow-md max-w-3xl mx-auto flex relative"
+            className="group text-white p-6 rounded-xl shadow-md mx-auto flex relative"
           >
             <div 
               className="absolute inset-0 rounded-xl bg-[linear-gradient(15deg,rgb(41,41,41),rgb(35,43,43))] 
@@ -70,20 +52,6 @@ export default function Projects() {
               group-hover:opacity-100"
             />
             <div className="w-1/4 flex flex-col mr-6 relative z-10">
-              <span className="text-[#4b5563] text-sm mb-2">
-                {new Date(project.startDate).toLocaleDateString("en-US", {
-                  month: "long",
-                  year: "numeric",
-                })}{" "}
-                -
-                {project.endDate
-                  ? " " +
-                    new Date(project.endDate).toLocaleDateString("en-US", {
-                      month: "long",
-                      year: "numeric",
-                    })
-                  : " Present"}
-              </span>
               {project.img && (
                 <img 
                   src={project.img} 

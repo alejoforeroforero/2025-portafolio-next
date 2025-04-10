@@ -29,36 +29,19 @@ export default function Experience() {
 
   if (loading) {
     return (
-      <div className="max-w-4xl p-[60px]">
-        <div className="animate-pulse">
-          <div className="h-8 bg-gray-700 rounded w-1/4 mb-8"></div>
-          <div className="space-y-12">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="border-l-2 border-gray-700 pl-8 relative">
-                <div className="absolute w-4 h-4 bg-gray-700 rounded-full -left-[9px] top-0" />
-                <div className="space-y-4">
-                  <div className="h-6 bg-gray-700 rounded w-3/4"></div>
-                  <div className="h-4 bg-gray-700 rounded w-1/4"></div>
-                  <div className="h-20 bg-gray-700 rounded w-full"></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+      <div className="max-w-4xl p-2">
+        loading....
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl p-[60px]">
-      <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-gray-100">
-        Experience
-      </h1>
+    <div className="max-w-4xl">
       <div className="space-y-12">
         {experiences.map((experience) => (
           <div
             key={experience.id}
-            className="group text-white p-6 rounded-xl shadow-md max-w-3xl mx-auto flex relative"
+            className="group text-white p-6 rounded-xl shadow-md mx-auto flex relative"
           >
             <div 
               className="absolute inset-0 rounded-xl bg-[linear-gradient(15deg,rgb(41,41,41),rgb(35,43,43))] 
