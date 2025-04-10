@@ -19,7 +19,7 @@ export const ProjectCard = ({ project, onEdit, onDelete }: ProjectCardProps) => 
               </span>
             </div>
             <p className="text-gray-400 mt-1">
-              {new Date(project.startDate).toLocaleDateString()} - {' '}
+              {project.startDate ? new Date(project.startDate).toLocaleDateString() : 'No date'} - {' '}
               {project.endDate ? new Date(project.endDate).toLocaleDateString() : 'Present'}
             </p>
             <p className="text-gray-400 mt-1">Position: {project.position}</p>

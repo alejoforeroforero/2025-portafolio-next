@@ -71,19 +71,21 @@ export default function NetArtPage() {
                 <span className="font-bold">{project.title}</span>{" "}
               </h2>
               <p className="text-gray-300 mt-3">{project.description}</p>
-              <div>
-                <a
-                  href={project.link}
-                  className="text-blue-400 hover:text-[#00DC82] inline-flex items-center transition-colors duration-[900ms]"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {new URL(project.link).hostname}
-                  <span className="text-[10px] ml-1 transform translate-y-[-4px] text-blue-800 group-hover:text-[#00DC82] transition-all duration-[900ms] ease-in-out group-hover:translate-x-[4px] group-hover:-translate-y-[6px]">
-                    ↗
-                  </span>
-                </a>
-              </div>
+              {project.link && (
+                <div>
+                  <a
+                    href={project.link}
+                    className="text-blue-400 hover:text-[#00DC82] inline-flex items-center transition-colors duration-[900ms]"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {new URL(project.link).hostname}
+                    <span className="text-[10px] ml-1 transform translate-y-[-4px] text-blue-800 group-hover:text-[#00DC82] transition-all duration-[900ms] ease-in-out group-hover:translate-x-[4px] group-hover:-translate-y-[6px]">
+                      ↗
+                    </span>
+                  </a>
+                </div>
+              )}
               <div className="flex flex-wrap gap-2 mt-4">
                 {project.stack.map((tech, index) => (
                   <span

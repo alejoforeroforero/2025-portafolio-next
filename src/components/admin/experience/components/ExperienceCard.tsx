@@ -14,7 +14,7 @@ export const ExperienceCard = ({ experience, onEdit, onDelete }: ExperienceCardP
           <div>
             <h3 className="text-xl font-semibold text-gray-100">{experience.title}</h3>
             <p className="text-gray-400 mt-1">
-              {new Date(experience.startDate).toLocaleDateString()} - {' '}
+              {experience.startDate ? new Date(experience.startDate).toLocaleDateString() : 'No date'} - {' '}
               {experience.endDate ? new Date(experience.endDate).toLocaleDateString() : 'Present'}
             </p>
           </div>
@@ -45,7 +45,7 @@ export const ExperienceCard = ({ experience, onEdit, onDelete }: ExperienceCardP
           <div className="flex items-center gap-2 text-sm">
             <span className="text-gray-300">Link:</span>
             <a 
-              href={experience.link}
+              href={experience.link || undefined}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-400 hover:text-blue-300 transition-colors"
