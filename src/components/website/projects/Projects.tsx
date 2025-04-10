@@ -82,7 +82,11 @@ export default function Projects() {
                 {project.stack.map((tech, index) => (
                   <span
                     key={index}
-                    className="bg-gray-700 text-white text-sm px-4 py-1 rounded-full"
+                    className="inline-block px-2 py-1 mr-[14px] mb-3 text-[0.8rem] rounded-lg"
+                    style={{
+                      backgroundColor: 'var(--tech-bg-color)',
+                      color: 'var(--tech-info-color)'
+                    }}
                   >
                     {tech}
                   </span>

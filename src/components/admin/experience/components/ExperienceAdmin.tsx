@@ -40,8 +40,6 @@ export const ExperienceAdmin = () => {
   };
 
   const handleUpdate = async (id: string) => {
-    if (!editForm.title || !editForm.description || !editForm.link) return;
-
     const updateToast = toast.loading('Updating experience...');
     try {
       const formToValidate = {
@@ -85,8 +83,6 @@ export const ExperienceAdmin = () => {
   };
 
   const handleCreate = async () => {
-    if (!createForm.title || !createForm.description || !createForm.link) return;
-
     const createToast = toast.loading('Creating experience...');
     try {
       const formToValidate = {

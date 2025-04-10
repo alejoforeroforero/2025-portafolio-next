@@ -36,8 +36,6 @@ export const ProjectAdmin = () => {
   };
 
   const handleUpdate = async (id: string) => {
-    if (!editForm.title || !editForm.description || !editForm.link) return;
-
     const updateToast = toast.loading('Updating project...');
     try {
       const formToValidate = {
@@ -55,7 +53,12 @@ export const ProjectAdmin = () => {
         createdAt: editForm.createdAt || new Date(),
         updatedAt: new Date(),
         stack: validatedData.stack.filter((item): item is string => item !== undefined),
-        endDate: isCurrentProject ? null : validatedData.endDate
+        endDate: isCurrentProject ? null : validatedData.endDate || null,
+        description: validatedData.description || null,
+        link: validatedData.link || null,
+        startDate: validatedData.startDate || null,
+        img: validatedData.img || null,
+        type: validatedData.type || null
       });
 
       setEditingId(null);
@@ -81,8 +84,6 @@ export const ProjectAdmin = () => {
   };
 
   const handleCreate = async () => {
-    if (!createForm.title || !createForm.description || !createForm.link) return;
-
     const createToast = toast.loading('Creating project...');
     try {
       const formToValidate = {
@@ -95,14 +96,14 @@ export const ProjectAdmin = () => {
       
       await CreateProject({
         title: validatedData.title,
-        description: validatedData.description,
-        link: validatedData.link,
-        startDate: validatedData.startDate,
-        endDate: isCurrentProject ? null : validatedData.endDate,
+        description: validatedData.description || null,
+        link: validatedData.link || null,
+        startDate: validatedData.startDate || null,
+        endDate: isCurrentProject ? null : validatedData.endDate || null,
         position: validatedData.position,
         stack: validatedData.stack.filter((item): item is string => item !== undefined),
         img: validatedData.img || null,
-        type: validatedData.type,
+        type: validatedData.type || null,
       });
 
       setIsFormVisible(false);

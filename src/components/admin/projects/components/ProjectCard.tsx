@@ -56,7 +56,7 @@ export const ProjectCard = ({ project, onEdit, onDelete }: ProjectCardProps) => 
           <img 
             src={project.img} 
             alt={project.title} 
-            className="w-full max-w-md rounded-lg shadow-lg"
+            className="w-[200px] h-[120px] object-cover rounded-lg shadow-lg"
           />
         )}
         <div className="flex flex-wrap gap-2">
