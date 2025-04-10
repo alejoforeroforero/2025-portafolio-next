@@ -62,7 +62,7 @@ export default function Experience() {
           >
             <div 
               className="absolute inset-0 rounded-xl bg-[linear-gradient(15deg,rgb(41,41,41),rgb(35,43,43))] 
-              opacity-0 transition-opacity duration-[2000ms] ease-in-out
+              opacity-0 transition-all duration-[2000ms] ease-in-out shadow-[inset_0_0_15px_rgba(127,123,123,0.2)]
               group-hover:opacity-100"
             />
             <div className="flex my-1 mr-4 text-[#4b5563] text-sm mb-2 relative z-10">
