@@ -44,19 +44,19 @@ export default function Projects() {
         {projects.map((project) => (
           <div
             key={project.id}
-            className="group text-white p-6 rounded-xl shadow-md mx-auto flex relative"
+            className="group text-white p-6 rounded-xl shadow-md mx-auto flex relative flex-col sm:flex-row"
           >
             <div 
               className="absolute inset-0 rounded-xl bg-[linear-gradient(15deg,rgb(41,41,41),rgb(35,43,43))] 
               opacity-0 transition-all duration-[2000ms] ease-in-out shadow-[inset_0_0_15px_rgba(127,123,123,0.2)]
               group-hover:opacity-100"
             />
-            <div className="w-1/4 flex flex-col mr-6 relative z-10">
+            <div className="mb-4 sm:w-1/4 sm:mr-6 relative z-10">
               {project.img && (
                 <img 
                   src={project.img} 
                   alt={project.title}
-                  className="w-[90%] h-12 object-cover rounded-lg mt-2"
+                  className="w-[90%] h-12 object-cover rounded-lg"
                 />
               )}
             </div>
@@ -67,12 +67,12 @@ export default function Projects() {
               <p className="text-gray-300 mt-3">{project.description}</p>
               <div>
                 <a
-                  href={project.link}
+                  href={project.link || ''}
                   className="text-blue-400 hover:text-[#00DC82] inline-flex items-center transition-colors duration-[900ms]"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {new URL(project.link).hostname}
+                  {project.link ? new URL(project.link).hostname : ''}
                   <span className="text-[10px] ml-1 transform translate-y-[-4px] text-blue-800 group-hover:text-[#00DC82] transition-all duration-[900ms] ease-in-out group-hover:translate-x-[4px] group-hover:-translate-y-[6px]">
                     ↗
                   </span>

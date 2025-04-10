@@ -1,0 +1,9 @@
+-- AlterTable
+ALTER TABLE "experiences" ALTER COLUMN "description" DROP NOT NULL,
+ALTER COLUMN "link" DROP NOT NULL,
+ALTER COLUMN "startDate" DROP NOT NULL;
+
+-- AlterTable
+ALTER TABLE "projects" ALTER COLUMN "description" DROP NOT NULL,
+ALTER COLUMN "link" DROP NOT NULL,
+ALTER COLUMN "startDate" DROP NOT NULL;

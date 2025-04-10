@@ -41,16 +41,16 @@ export default function Experience() {
         {experiences.map((experience) => (
           <div
             key={experience.id}
-            className="group text-white p-6 rounded-xl shadow-md mx-auto flex relative"
+            className="group text-white p-6 rounded-xl shadow-md mx-auto flex relative flex-col sm:flex-row"
           >
             <div 
               className="absolute inset-0 rounded-xl bg-[linear-gradient(15deg,rgb(41,41,41),rgb(35,43,43))] 
               opacity-0 transition-all duration-[2000ms] ease-in-out shadow-[inset_0_0_15px_rgba(127,123,123,0.2)]
               group-hover:opacity-100"
             />
-            <div className="flex my-1 w-1/4 mr-4 text-[#4b5563] text-sm mb-2 relative z-10">
+            <div className="flex mb-4 sm:w-1/4 sm:mr-4 text-[#4b5563] text-sm relative z-10">
               <span>
-                {new Date(experience.startDate).toLocaleDateString("en-US", {
+                {new Date(experience.startDate!).toLocaleDateString("en-US", {
                   month: "long",
                   year: "numeric",
                 })}{" "}
@@ -64,19 +64,19 @@ export default function Experience() {
                   : " Present"}
               </span>
             </div>
-            <div className="relative z-10">
+            <div className="relative z-10 sm:flex-1">
               <h2 className="text-xl font-semibold text-white">
                 <span className="font-bold">{experience.title}</span>{" "}
               </h2>
               <p className="text-gray-300 mt-3">{experience.description}</p>
               <div>
                 <a
-                  href={experience.link}
+                  href={experience.link || ''}
                   className="text-blue-400 hover:text-[#00DC82] inline-flex items-center transition-colors duration-[900ms]"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {new URL(experience.link).hostname}
+                  {experience.link ? new URL(experience.link).hostname : ''}
                   <span className="text-[10px] ml-1 transform translate-y-[-4px] text-blue-800 group-hover:text-[#00DC82] transition-all duration-[900ms] ease-in-out group-hover:translate-x-[4px] group-hover:-translate-y-[6px]">
                     ↗
                   </span>

@@ -83,9 +83,9 @@ model Profile {
 model Experience {
   id          String    @id @default(uuid())
   title       String
-  description String
-  link        String
-  startDate   DateTime
+  description String?
+  link        String?
+  startDate   DateTime?
   endDate     DateTime?
   position    Int
   stack       String[]
@@ -99,9 +99,9 @@ model Experience {
 model Project {
   id          String    @id @default(uuid())
   title       String
-  description String
-  link        String
-  startDate   DateTime
+  description String?
+  link        String?
+  startDate   DateTime?
   endDate     DateTime?
   position    Int
   stack       String[]

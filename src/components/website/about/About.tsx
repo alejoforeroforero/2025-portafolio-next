@@ -39,7 +39,7 @@ export default function About() {
   }
 
   return (
-    <div className="max-w-4xl pt-20 p-8">
+    <div className="max-w-4xl pt-4 lg:pt-20 p-8">
       <div className="prose dark:prose-invert">
         {profile?.bio && convertToHTMLDynamic(profile.bio)}
       </div>
