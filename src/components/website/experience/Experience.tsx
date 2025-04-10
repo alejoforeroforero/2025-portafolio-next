@@ -65,7 +65,7 @@ export default function Experience() {
               opacity-0 transition-all duration-[2000ms] ease-in-out shadow-[inset_0_0_15px_rgba(127,123,123,0.2)]
               group-hover:opacity-100"
             />
-            <div className="flex my-1 mr-4 text-[#4b5563] text-sm mb-2 relative z-10">
+            <div className="flex my-1 w-1/4 mr-4 text-[#4b5563] text-sm mb-2 relative z-10">
               <span>
                 {new Date(experience.startDate).toLocaleDateString("en-US", {
                   month: "long",
