@@ -59,6 +59,19 @@ export const GetProjectsNetArt = async () => {
   return projects;
 };
 
+export const GetProjectsApis = async () => {
+  const projects = await prisma.project.findMany({
+    where: {
+      type: 'api'
+    },
+    orderBy: {
+      position: 'desc',
+    },
+  });
+
+  return projects;
+};
+
 export const UpdateProject = async (data: Project) => {
   const project = await prisma.project.update({
     where: { id: data.id },
