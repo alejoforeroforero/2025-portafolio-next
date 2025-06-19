@@ -54,10 +54,10 @@ export const PreviewButton = () => {
       {showPreview &&
         createPortal(
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[999]">
-            <div className="bg-white dark:bg-gray-800 p-4 rounded-md shadow-lg w-3/4 max-w-4xl">
+            <div className="bg-gray-800 p-4 rounded-md shadow-lg w-3/4 max-w-4xl">
               <div className="flex flex-col gap-4">
                 <div className="flex justify-between items-center">
-                  <h2 className="text-lg font-semibold dark:text-gray-200">
+                  <h2 className="text-lg font-semibold text-gray-200">
                     Preview
                   </h2>
                   <div className="flex gap-2">
@@ -80,7 +80,7 @@ export const PreviewButton = () => {
                 
               </div>
               
-              <div className="editor-scroller overflow-auto max-h-[70vh] dark:text-gray-200 mt-4">
+              <div className="editor-scroller overflow-auto max-h-[70vh] text-gray-200 mt-4">
                 <div className="editor-container">
                   <div className="editor-inner">
                     <div className="editor-input">

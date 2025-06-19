@@ -87,10 +87,10 @@ export const ProfileAdmin = () => {
   return (
     <div className="w-full mt-8 max-w-[1100px] mx-auto p-6">
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+        <h2 className="text-2xl font-bold text-gray-100">
           Profile Management
         </h2>
-        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        <p className="mt-1 text-sm text-gray-400">
           Update your profile information
         </p>
       </div>
@@ -99,7 +99,7 @@ export const ProfileAdmin = () => {
         <div>
           <label
             htmlFor="name"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            className="block text-sm font-medium text-gray-300"
           >
             Name
           </label>
@@ -109,7 +109,7 @@ export const ProfileAdmin = () => {
             name="name"
             value={formData.name}
             onChange={handleInputChange}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 dark:text-gray-100 dark:border-gray-700 dark:bg-gray-800 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-700 px-3 py-2 text-gray-100 bg-gray-800 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             required
           />
         </div>
@@ -117,7 +117,7 @@ export const ProfileAdmin = () => {
         <div>
           <label
             htmlFor="title"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            className="block text-sm font-medium text-gray-300"
           >
             Title
           </label>
@@ -127,7 +127,7 @@ export const ProfileAdmin = () => {
             name="title"
             value={formData.title}
             onChange={handleInputChange}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 dark:text-gray-100 dark:border-gray-700 dark:bg-gray-800 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-700 px-3 py-2 text-gray-100 bg-gray-800 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             required
           />
         </div>
@@ -135,7 +135,7 @@ export const ProfileAdmin = () => {
         <div>
           <label
             htmlFor="tagline"
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            className="block text-sm font-medium text-gray-300"
           >
             Tagline
           </label>
@@ -145,7 +145,7 @@ export const ProfileAdmin = () => {
             name="tagline"
             value={formData.tagline}
             onChange={handleInputChange}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 dark:text-gray-100 dark:border-gray-700 dark:bg-gray-800 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-700 px-3 py-2 text-gray-100 bg-gray-800 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             required
           />
         </div>
@@ -160,11 +160,11 @@ export const ProfileAdmin = () => {
           </button>
         </div>
       </form>
-      <div className="my-8 h-px bg-gray-200 dark:bg-gray-700" />
+      <div className="my-8 h-px bg-gray-700" />
       <div>
         <label
           htmlFor="bio"
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+          className="block text-sm font-medium text-gray-300 mb-2"
         >
           Bio
         </label>

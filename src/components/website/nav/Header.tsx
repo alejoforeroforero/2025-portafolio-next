@@ -47,13 +47,13 @@ export default function Header() {
         }
       `}</style>
       <div className="max-w-4xl">
-        <h1 className="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100 responsive-heading">
+        <h1 className="text-5xl font-bold mb-4 text-gray-100 responsive-heading">
           {profile?.name}
         </h1>
-        <h2 className="text-2xl font-semibold mb-2 text-gray-700 dark:text-gray-300 responsive-heading">
+        <h2 className="text-2xl font-semibold mb-2 text-gray-300 responsive-heading">
           {profile?.title}
         </h2>
-        <p className="text-lg text-gray-600 dark:text-gray-400 responsive-heading">
+        <p className="text-lg text-gray-400 responsive-heading">
           {profile?.tagline}
         </p>
       </div>

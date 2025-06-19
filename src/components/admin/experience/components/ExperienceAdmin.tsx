@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Experience } from "@prisma/client";
@@ -133,7 +132,7 @@ export const ExperienceAdmin = () => {
   return (
     <div className="w-full mt-8 max-w-[1100px] mx-auto p-6">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Experiences</h2>
+        <h2 className="text-2xl font-bold text-gray-100">Experiences</h2>
         <button
           onClick={() => setIsFormVisible(true)}
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
