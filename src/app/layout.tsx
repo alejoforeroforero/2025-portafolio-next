@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Alejandro Forero Portafolio",
+  title: "Alejandro Forero Portafolio Vercel",
   description: "This is my portafolio, where I show my work as a Full Stack Developer.",
 };
 
