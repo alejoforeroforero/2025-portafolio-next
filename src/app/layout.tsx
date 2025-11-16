@@ -21,8 +21,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Alejo Forero",
-  description: "This is my portafolio, where I show my work as a Full Stack Developer.",
+  title: "Alejo Forero | Software Engineer",
+  description: "Dive into the work of Alejo Forero, a passionate Full-Stack Developer. This portfolio features a collection of my projects, highlighting my skills in both front-end and back-end development to create seamless, end-to-end user experiences",
 };
 
 export default function RootLayout({
