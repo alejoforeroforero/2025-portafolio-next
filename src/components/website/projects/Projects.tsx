@@ -1,61 +1,39 @@
-
-
-'use client';
-
 import type { Project } from "@prisma/client";
-import { useEffect, useState } from "react";
-import { GetProjectsRoot } from "@/components/actions/project-actions";
-import toast from "react-hot-toast";
+import Image from "next/image";
 
-export default function Projects() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
+interface ProjectsProps {
+  projects: Project[];
+}
 
-  useEffect(() => {
-    loadProjects();
-  }, []);
-
-  const loadProjects = async () => {
-    const loadingToast = toast.loading("Loading projects...");
-    try {
-      const data = await GetProjectsRoot();
-      setProjects(data);
-      toast.success("Projects loaded successfully", { id: loadingToast });
-    } catch (error) {
-      toast.error("Failed to load projects", { id: loadingToast });
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
+export default function Projects({ projects }: ProjectsProps) {
+  if (projects.length === 0) {
     return (
-      <div className="max-w-4xl p-2 text-black-200-100">
-        
+      <div className="max-w-4xl p-8">
+        <p className="text-gray-400">No projects available</p>
       </div>
     );
   }
 
   return (
     <div className="max-w-4xl">
-
       <div className="space-y-12">
         {projects.map((project) => (
           <div
             key={project.id}
             className="group text-white p-6 rounded-xl shadow-md mx-auto flex relative flex-col sm:flex-row"
           >
-            <div 
-              className="absolute inset-0 rounded-xl bg-[linear-gradient(15deg,rgb(41,41,41),rgb(35,43,43))] 
+            <div
+              className="absolute inset-0 rounded-xl bg-[linear-gradient(15deg,rgb(41,41,41),rgb(35,43,43))]
               opacity-0 transition-all duration-[2000ms] ease-in-out shadow-[inset_0_0_15px_rgba(127,123,123,0.2)]
               group-hover:opacity-100"
             />
             <div className="mb-4 sm:w-1/4 sm:mr-6 relative z-10">
               {project.img && (
-                <img 
-                  src={project.img} 
+                <Image
+                  src={project.img}
                   alt={project.title}
+                  width={150}
+                  height={48}
                   className="w-[90%] h-12 object-cover rounded-lg"
                 />
               )}
@@ -65,28 +43,26 @@ export default function Projects() {
                 <span className="font-bold">{project.title}</span>{" "}
               </h2>
               <p className="text-gray-300 mt-3">{project.description}</p>
-              <div>
-                <a
-                  href={project.link || ''}
-                  className="text-blue-400 hover:text-[#00DC82] inline-flex items-center transition-colors duration-[900ms]"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {project.link ? new URL(project.link).hostname : ''}
-                  <span className="text-[10px] ml-1 transform translate-y-[-4px] text-blue-800 group-hover:text-[#00DC82] transition-all duration-[900ms] ease-in-out group-hover:translate-x-[4px] group-hover:-translate-y-[6px]">
-                    ↗
-                  </span>
-                </a>
-              </div>
+              {project.link && (
+                <div>
+                  <a
+                    href={project.link}
+                    className="text-blue-400 hover:text-[#00DC82] inline-flex items-center transition-colors duration-[900ms]"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {new URL(project.link).hostname}
+                    <span className="text-[10px] ml-1 transform translate-y-[-4px] text-blue-800 group-hover:text-[#00DC82] transition-all duration-[900ms] ease-in-out group-hover:translate-x-[4px] group-hover:-translate-y-[6px]">
+                      ↗
+                    </span>
+                  </a>
+                </div>
+              )}
               <div className="flex flex-wrap gap-2 mt-4">
                 {project.stack.map((tech, index) => (
                   <span
                     key={index}
-                    className="inline-block px-2 py-1 mr-[14px] mb-3 text-[0.8rem] rounded-lg"
-                    style={{
-                      backgroundColor: 'var(--tech-bg-color)',
-                      color: 'var(--tech-info-color)'
-                    }}
+                    className="tech-badge"
                   >
                     {tech}
                   </span>
@@ -99,4 +75,3 @@ export default function Projects() {
     </div>
   );
 }
-

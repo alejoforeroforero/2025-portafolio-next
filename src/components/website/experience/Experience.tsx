@@ -1,36 +1,14 @@
-"use client";
+import type { Experience as ExperienceType } from "@prisma/client";
 
-import type { Experience } from "@prisma/client";
-import { useEffect, useState } from "react";
-import { GetExperiences } from "@/components/actions/experience-actions";
-import toast from "react-hot-toast";
+interface ExperienceProps {
+  experiences: ExperienceType[];
+}
 
-export default function Experience() {
-  const [experiences, setExperiences] = useState<Experience[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadExperiences();
-  }, []);
-
-  const loadExperiences = async () => {
-    const loadingToast = toast.loading("Loading experiences...");
-    try {
-      const data = await GetExperiences();
-      setExperiences(data);
-      toast.success("Experiences loaded successfully", { id: loadingToast });
-    } catch (error) {
-      toast.error("Failed to load experiences", { id: loadingToast });
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
+export default function Experience({ experiences }: ExperienceProps) {
+  if (experiences.length === 0) {
     return (
-      <div className="max-w-4xl p-2">
-       
+      <div className="max-w-4xl p-8">
+        <p className="text-gray-400">No experiences available</p>
       </div>
     );
   }
@@ -43,14 +21,14 @@ export default function Experience() {
             key={experience.id}
             className="group text-white p-6 rounded-xl shadow-md mx-auto flex relative flex-col sm:flex-row"
           >
-            <div 
-              className="absolute inset-0 rounded-xl bg-[linear-gradient(15deg,rgb(41,41,41),rgb(35,43,43))] 
+            <div
+              className="absolute inset-0 rounded-xl bg-[linear-gradient(15deg,rgb(41,41,41),rgb(35,43,43))]
               opacity-0 transition-all duration-[2000ms] ease-in-out shadow-[inset_0_0_15px_rgba(127,123,123,0.2)]
               group-hover:opacity-100"
             />
             <div className="flex mb-4 sm:w-1/4 sm:mr-4 text-[#4b5563] text-sm relative z-10">
               <span>
-                {new Date(experience.startDate!).toLocaleDateString("en-US", {
+                {experience.startDate && new Date(experience.startDate).toLocaleDateString("en-US", {
                   month: "long",
                   year: "numeric",
                 })}{" "}
@@ -69,28 +47,26 @@ export default function Experience() {
                 <span className="font-bold">{experience.title}</span>{" "}
               </h2>
               <p className="text-gray-300 mt-3">{experience.description}</p>
-              <div>
-                <a
-                  href={experience.link || ''}
-                  className="text-blue-400 hover:text-[#00DC82] inline-flex items-center transition-colors duration-[900ms]"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {experience.link ? new URL(experience.link).hostname : ''}
-                  <span className="text-[10px] ml-1 transform translate-y-[-4px] text-blue-800 group-hover:text-[#00DC82] transition-all duration-[900ms] ease-in-out group-hover:translate-x-[4px] group-hover:-translate-y-[6px]">
-                    ↗
-                  </span>
-                </a>
-              </div>
+              {experience.link && (
+                <div>
+                  <a
+                    href={experience.link}
+                    className="text-blue-400 hover:text-[#00DC82] inline-flex items-center transition-colors duration-[900ms]"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {new URL(experience.link).hostname}
+                    <span className="text-[10px] ml-1 transform translate-y-[-4px] text-blue-800 group-hover:text-[#00DC82] transition-all duration-[900ms] ease-in-out group-hover:translate-x-[4px] group-hover:-translate-y-[6px]">
+                      ↗
+                    </span>
+                  </a>
+                </div>
+              )}
               <div className="flex flex-wrap gap-2 mt-4">
                 {experience.stack.map((tech, index) => (
                   <span
                     key={index}
-                    className="inline-block px-2 py-1 mr-[14px] mb-3 text-[0.8rem] rounded-lg"
-                    style={{
-                      backgroundColor: 'var(--tech-bg-color)',
-                      color: 'var(--tech-info-color)'
-                    }}
+                    className="tech-badge"
                   >
                     {tech}
                   </span>

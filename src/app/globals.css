@@ -24,3 +24,14 @@ body {
 p {
   color: var(--p-color);
 }
+
+.tech-badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  margin-right: 14px;
+  margin-bottom: 0.75rem;
+  font-size: 0.8rem;
+  border-radius: 0.5rem;
+  background-color: var(--tech-bg-color);
+  color: var(--tech-info-color);
+}

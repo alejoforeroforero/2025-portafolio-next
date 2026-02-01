@@ -1,45 +1,15 @@
-'use client';
-
-import { useEffect, useState } from "react";
 import type { Project } from "@prisma/client";
 import { GetProjectsApis } from "@/components/actions/project-actions";
-import toast from "react-hot-toast";
 import Link from "next/link";
+import Image from "next/image";
 
-export default function ProjectsPage() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadProjects();
-  }, []);
-
-  const loadProjects = async () => {
-    const loadingToast = toast.loading("Loading projects...");
-    try {
-      const data = await GetProjectsApis();
-      setProjects(data);
-      toast.success("Projects loaded successfully", { id: loadingToast });
-    } catch (error) {
-      toast.error("Failed to load projects", { id: loadingToast });
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="max-w-4xl p-2 text-black-200-100">
-        
-      </div>
-    );
-  }
+export default async function ProjectsPage() {
+  const projects: Project[] = await GetProjectsApis();
 
   return (
     <div className="max-w-4xl p-4 mx-auto">
-      <Link 
-        href="/" 
+      <Link
+        href="/"
         className="text-blue-400 hover:text-[#00DC82] inline-flex items-center transition-colors duration-[900ms]"
       >
         ← Back to Portfolio
@@ -52,16 +22,18 @@ export default function ProjectsPage() {
             key={project.id}
             className="group text-white p-6 rounded-xl shadow-md mx-auto flex relative"
           >
-            <div 
-              className="absolute inset-0 rounded-xl bg-[linear-gradient(15deg,rgb(41,41,41),rgb(35,43,43))] 
+            <div
+              className="absolute inset-0 rounded-xl bg-[linear-gradient(15deg,rgb(41,41,41),rgb(35,43,43))]
               opacity-0 transition-all duration-[2000ms] ease-in-out shadow-[inset_0_0_15px_rgba(127,123,123,0.2)]
               group-hover:opacity-100"
             />
             <div className="w-1/4 flex flex-col mr-6 relative z-10">
               {project.img && (
-                <img 
-                  src={project.img} 
+                <Image
+                  src={project.img}
                   alt={project.title}
+                  width={150}
+                  height={48}
                   className="w-[90%] h-12 object-cover rounded-lg mt-2"
                 />
               )}
@@ -88,10 +60,7 @@ export default function ProjectsPage() {
               )}
               <div className="flex flex-wrap gap-2 mt-4">
                 {project.stack.map((tech, index) => (
-                  <span
-                    key={index}
-                    className="bg-gray-700 text-white text-sm px-4 py-1 rounded-full"
-                  >
+                  <span key={index} className="tech-badge">
                     {tech}
                   </span>
                 ))}
