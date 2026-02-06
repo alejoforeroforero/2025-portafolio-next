@@ -13,7 +13,7 @@ interface TabsProps {
 
 export const Tabs = ({ tabs, activeTab, onTabChange }: TabsProps) => {
   return (
-    <div className="border-b border-gray-700">
+    <div>
       <nav className="flex space-x-8" aria-label="Tabs">
         {tabs.map((tab) => (
           <button
