@@ -1,3 +1,5 @@
+export const revalidate = false;
+
 import { Menu } from "@/components/website/nav/Menu";
 import About from "@/components/website/about/About";
 import Experience from "@/components/website/experience/Experience";

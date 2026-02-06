@@ -1,3 +1,5 @@
+export const revalidate = false;
+
 import type { Project } from "@prisma/client";
 import { GetProjectsApis } from "@/components/actions/project-actions";
 import Link from "next/link";
